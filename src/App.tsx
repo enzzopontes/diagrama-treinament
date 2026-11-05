@@ -24,6 +24,12 @@ import { SqlPracticeLabView } from './components/SqlPracticeLabView';
 import { ProgCNp2ResumoView } from './components/ProgCNp2ResumoView';
 import { RedesNp2ResumoView } from './components/RedesNp2ResumoView';
 import { EngSoftNp2ResumoView } from './components/EngSoftNp2ResumoView';
+import { Np2FlashcardsView } from './components/Np2FlashcardsView';
+import { Np2SimuladoView } from './components/Np2SimuladoView';
+import { BD_NP2_FLASHCARDS, BD_NP2_SIMULADO_QUESTIONS } from './data/bdNp2Data';
+import { PROG_C_NP2_FLASHCARDS, PROG_C_NP2_SIMULADO_QUESTIONS } from './data/progCNp2Data';
+import { REDES_NP2_FLASHCARDS, REDES_NP2_SIMULADO_QUESTIONS } from './data/redesNp2Data';
+import { ENG_SOFT_NP2_FLASHCARDS, ENG_SOFT_NP2_SIMULADO_QUESTIONS } from './data/engSoftNp2Data';
 import { BottomBarAdjusterModal } from './components/BottomBarAdjusterModal';
 import { AmbientBackground } from './components/AmbientBackground';
 import { DEFAULT_SUBJECTS } from './data/subjects';
@@ -117,7 +123,35 @@ export const App: React.FC = () => {
 
       {/* 4. Módulo do Simulado Oficial da Matéria Selecionada */}
       {currentModule === 'simulado' &&
-        (selectedSubject.id === 'programacao-em-c' ? (
+        (selectedSubject.id === 'banco-de-dados-np2' ? (
+          <Np2SimuladoView
+            title="Simulado de Banco de Dados: T-SQL & SQL Server"
+            subjectCode="BD-201"
+            questions={BD_NP2_SIMULADO_QUESTIONS}
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'programacao-em-c-np2' ? (
+          <Np2SimuladoView
+            title="Simulado de C: Matrizes & Memória"
+            subjectCode="PC-201"
+            questions={PROG_C_NP2_SIMULADO_QUESTIONS}
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
+          <Np2SimuladoView
+            title="Simulado de Redes: Sub-redes & IPv4"
+            subjectCode="RSD-202"
+            questions={REDES_NP2_SIMULADO_QUESTIONS}
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'eng-software-np2' ? (
+          <Np2SimuladoView
+            title="Simulado de Engenharia de Software NP2"
+            subjectCode="ES-202"
+            questions={ENG_SOFT_NP2_SIMULADO_QUESTIONS}
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCSimuladoView
             onBack={() => setCurrentModule('subject')}
             onOpenBottomBarSettings={openBottomBarSettings}
@@ -137,7 +171,39 @@ export const App: React.FC = () => {
 
       {/* 5. Módulo de Flashcards de Fixação da Matéria Selecionada */}
       {currentModule === 'flashcards' &&
-        (selectedSubject.id === 'programacao-em-c' ? (
+        (selectedSubject.id === 'banco-de-dados-np2' ? (
+          <Np2FlashcardsView
+            title="Flashcards: SQL Server & T-SQL"
+            subjectCode="BD-201"
+            data={BD_NP2_FLASHCARDS}
+            accentColor="text-blue-400"
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'programacao-em-c-np2' ? (
+          <Np2FlashcardsView
+            title="Flashcards: Matrizes & Ponteiros em C"
+            subjectCode="PC-201"
+            data={PROG_C_NP2_FLASHCARDS}
+            accentColor="text-sky-400"
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
+          <Np2FlashcardsView
+            title="Flashcards: Sub-redes & Cabeçalho IPv4"
+            subjectCode="RSD-202"
+            data={REDES_NP2_FLASHCARDS}
+            accentColor="text-cyan-400"
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'eng-software-np2' ? (
+          <Np2FlashcardsView
+            title="Flashcards: UML, Sequência & Arquitetura"
+            subjectCode="ES-202"
+            data={ENG_SOFT_NP2_FLASHCARDS}
+            accentColor="text-emerald-400"
+            onBack={() => setCurrentModule('subject')}
+          />
+        ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCFlashcardsView
             onBack={() => setCurrentModule('subject')}
             onOpenBottomBarSettings={openBottomBarSettings}

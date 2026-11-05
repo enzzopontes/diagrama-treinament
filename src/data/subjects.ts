@@ -19,10 +19,10 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     iconBg: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
     tagColor: 'text-blue-400 bg-blue-950/60 border-blue-800/40',
     badgeColor: 'bg-blue-950 text-blue-400 border-blue-800/60',
-    modulesCount: 2,
+    modulesCount: 4,
     stats: {
-      flashcards: 43,
-      questions: 11,
+      flashcards: 16,
+      questions: 10,
       topics: 5,
       exercises: 11,
     },
@@ -34,6 +34,24 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
         badge: 'Teoria Direta',
         description:
           'DDL do SQL Server, DQL com filtros, Funções de Linha Única (Texto, Data, Números), ISNULL, CASE WHEN e INNER JOINs das aulas práticas.',
+        available: true,
+      },
+      {
+        id: 'flashcards',
+        title: 'Flashcards de Fixação SQL',
+        tag: '16 Cards • DDL, DQL, Funções e JOINs',
+        badge: 'Memorização Ágil',
+        description:
+          'Treine e memorize restrições DDL, sintaxe de LIKE, funções de data, LEN, substituições com ISNULL, CASE WHEN e junções relacionais.',
+        available: true,
+      },
+      {
+        id: 'simulado',
+        title: 'Simulado Oficial de Banco de Dados',
+        tag: '10 Questões • Estilo Prova NP2',
+        badge: 'Avaliação & Gabarito',
+        description:
+          'Questões objetivas com feedback imediato, código T-SQL real e justificativa detalhada para testar seus conhecimentos.',
         available: true,
       },
       {
@@ -62,9 +80,9 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     iconBg: 'bg-sky-500/10 border-sky-500/30 text-sky-400',
     tagColor: 'text-sky-400 bg-sky-950/60 border-sky-800/40',
     badgeColor: 'bg-sky-950 text-sky-400 border-sky-800/60',
-    modulesCount: 1,
+    modulesCount: 3,
     stats: {
-      flashcards: 23,
+      flashcards: 11,
       questions: 10,
       topics: 4,
       exercises: 1,
@@ -77,6 +95,24 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
         badge: 'Teoria + Prática',
         description:
           'Declaração de matrizes, laços aninhados, operadores & e *, ponteiros contíguos na memória e simulador de assentos da sala de cinema.',
+        available: true,
+      },
+      {
+        id: 'flashcards',
+        title: 'Flashcards de Matrizes & Ponteiros',
+        tag: '11 Cards • Operadores & e *',
+        badge: 'Memorização Ágil',
+        description:
+          'Fixe declaração de matrizes 2D, aritmética de ponteiros, desreferenciação na memória RAM e regras do Cinema.C.',
+        available: true,
+      },
+      {
+        id: 'simulado',
+        title: 'Simulado de C: Matrizes e Memória',
+        tag: '10 Questões • Rastreio de Código',
+        badge: 'Avaliação & Gabarito',
+        description:
+          'Questões objetivas com análise de saída no console, laços for aninhados, sizeof de matrizes e pegadinhas de ponteiros.',
         available: true,
       },
     ],
@@ -96,9 +132,9 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     iconBg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400',
     tagColor: 'text-cyan-400 bg-cyan-950/60 border-cyan-800/40',
     badgeColor: 'bg-cyan-950 text-cyan-400 border-cyan-800/60',
-    modulesCount: 1,
+    modulesCount: 3,
     stats: {
-      flashcards: 34,
+      flashcards: 11,
       questions: 10,
       topics: 4,
       exercises: 4,
@@ -111,6 +147,24 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
         badge: 'Teoria + Prática',
         description:
           'Cálculo detalhado de sub-redes /22 com salto no 3º octeto e análise de todos os campos do cabeçalho IPv4.',
+        available: true,
+      },
+      {
+        id: 'flashcards',
+        title: 'Flashcards de Redes: /22 & Pacote IPv4',
+        tag: '11 Cards • Sub-redes & Datagrama',
+        badge: 'Memorização Ágil',
+        description:
+          'Memorize máscaras de sub-rede, saltos, broadcast, cálculo de hosts úteis, HLEN, Total Length, TTL e Flags.',
+        available: true,
+      },
+      {
+        id: 'simulado',
+        title: 'Simulado de Redes: Sub-redes e Protocolos',
+        tag: '10 Questões • Prova Prof. Fábio',
+        badge: 'Avaliação & Gabarito',
+        description:
+          'Cálculos práticos de faixas de IP /22, identificação de campos do cabeçalho IPv4 e lógica de roteamento.',
         available: true,
       },
     ],
@@ -130,8 +184,10 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     iconBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
     tagColor: 'text-emerald-400 bg-emerald-950/60 border-emerald-800/40',
     badgeColor: 'bg-emerald-950 text-emerald-400 border-emerald-800/60',
-    modulesCount: 1,
+    modulesCount: 3,
     stats: {
+      flashcards: 12,
+      questions: 10,
       topics: 4,
     },
     modules: [
@@ -142,6 +198,24 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
         badge: 'Teoria Direta',
         description:
           'UML em ágil (Caso de Uso -> Sequência -> Classes), bloco ALT, Padrão MVC detalhado e modelo 4+1 visões.',
+        available: true,
+      },
+      {
+        id: 'flashcards',
+        title: 'Flashcards de UML & Padrões',
+        tag: '12 Cards • Sequência, Classes e MVC',
+        badge: 'Memorização Ágil',
+        description:
+          'Domine a semântica do bloco ALT, visibilidades +, -, #, agregação vs composição e o modelo 4+1 de Kruchten.',
+        available: true,
+      },
+      {
+        id: 'simulado',
+        title: 'Simulado de Engenharia de Software NP2',
+        tag: '10 Questões • Cenários e Arquitetura',
+        badge: 'Avaliação & Gabarito',
+        description:
+          'Interpretação prática de diagramas UML, padrões arquiteturais (MVC vs Camadas) e Requisitos Não Funcionais.',
         available: true,
       },
     ],

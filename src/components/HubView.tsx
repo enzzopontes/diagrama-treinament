@@ -12,6 +12,8 @@ import {
   Search,
   Terminal,
   Flame,
+  Sparkles,
+  Award,
 } from 'lucide-react';
 import { HubHeader } from './HubHeader';
 import { DEFAULT_SUBJECTS } from '../data/subjects';
@@ -313,20 +315,40 @@ export const HubView: React.FC<HubViewProps> = ({
 
                     {/* Atalhos Rápidos */}
                     {isAvailable && (
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap justify-end">
+                        {subject.modules.some((m) => m.id === 'flashcards') && (
+                          <button
+                            onClick={() => onQuickLaunchModule(subject, 'flashcards')}
+                            className="px-2.5 py-1.5 min-h-[38px] rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1 touch-manipulation active:scale-95"
+                            title="Flashcards de Fixação"
+                          >
+                            <Sparkles size={13} />
+                            <span>Cards</span>
+                          </button>
+                        )}
+                        {subject.modules.some((m) => m.id === 'simulado') && (
+                          <button
+                            onClick={() => onQuickLaunchModule(subject, 'simulado')}
+                            className="px-2.5 py-1.5 min-h-[38px] rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1 touch-manipulation active:scale-95"
+                            title="Simulado da Prova"
+                          >
+                            <Award size={13} />
+                            <span>Simulado</span>
+                          </button>
+                        )}
                         {subject.modules.some((m) => m.id === 'diagramas') && (
                           <button
                             onClick={() => onQuickLaunchModule(subject, 'diagramas')}
-                            className="px-3 py-1.5 min-h-[38px] rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1"
+                            className="px-2.5 py-1.5 min-h-[38px] rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1 touch-manipulation active:scale-95"
                             title="Prática / Laboratório"
                           >
                             <Terminal size={13} />
-                            <span>{subject.id.includes('banco-de-dados') ? 'Praticar SQL' : 'Laboratório'}</span>
+                            <span>{subject.id.includes('banco-de-dados') ? 'SQL' : 'Lab'}</span>
                           </button>
                         )}
                         <button
                           onClick={() => onQuickLaunchModule(subject, 'resumo')}
-                          className="px-3 py-1.5 min-h-[38px] rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1"
+                          className="px-2.5 py-1.5 min-h-[38px] rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-300 text-xs font-medium transition-all cursor-pointer flex items-center gap-1 touch-manipulation active:scale-95"
                           title="Resumo Teórico"
                         >
                           <BookOpen size={13} />
