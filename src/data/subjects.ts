@@ -1,21 +1,189 @@
 import type { SubjectItem } from '../types/navigation';
 
 export const DEFAULT_SUBJECTS: SubjectItem[] = [
+  // ==========================================
+  // DISCIPLINAS NP2 (2º BIMESTRE ATUAL - AULAS OUT/NOV 2026)
+  // ==========================================
+  {
+    id: 'banco-de-dados-np2',
+    title: 'Banco de Dados: SQL Server & T-SQL',
+    code: 'BD-201',
+    semester: 'NP2',
+    category: 'SQL & Modelagem Relacional',
+    description:
+      'DDL estrutural (Script Prof. Flávio), DQL (SELECT, WHERE, LIKE), Funções de Linha Única (UPPER, LEN, DATEDIFF), ISNULL, CASE WHEN e junções múltiplas (INNER JOIN).',
+    status: 'available',
+    accentColor: 'text-blue-400',
+    gradient: 'from-blue-600/10 via-slate-900 to-cyan-900/10',
+    borderHover: 'hover:border-blue-500/50',
+    iconBg: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
+    tagColor: 'text-blue-400 bg-blue-950/60 border-blue-800/40',
+    badgeColor: 'bg-blue-950 text-blue-400 border-blue-800/60',
+    modulesCount: 2,
+    stats: {
+      flashcards: 43,
+      questions: 11,
+      topics: 5,
+      exercises: 11,
+    },
+    modules: [
+      {
+        id: 'resumo',
+        title: 'Resumo Teórico Oficial NP2',
+        tag: 'Aulas 10 a 18 • Prof. Flávio',
+        badge: 'Teoria Direta',
+        description:
+          'DDL do SQL Server, DQL com filtros, Funções de Linha Única (Texto, Data, Números), ISNULL, CASE WHEN e INNER JOINs das aulas práticas.',
+        available: true,
+      },
+      {
+        id: 'diagramas',
+        title: 'Laboratório Prático SQL (Banco Simulado)',
+        tag: '11 Desafios + Modo Livre',
+        badge: 'Treino Interativo',
+        description:
+          'Execute consultas reais no banco simulado (PAIS, CIDADE, PESSOA, PRODUTO), verifique se está correto e inspecione tabelas.',
+        available: true,
+      },
+    ],
+  },
+  {
+    id: 'programacao-em-c-np2',
+    title: 'Programação em C: Matrizes & Ponteiros',
+    code: 'PC-201',
+    semester: 'NP2',
+    category: 'Linguagem C & Memória',
+    description:
+      'Matrizes bidimensionais, laços aninhados, ponteiros de memória (& e *), aritmética de ponteiros e simulador do sistema de cinema (Aula 11).',
+    status: 'available',
+    accentColor: 'text-sky-400',
+    gradient: 'from-sky-600/10 via-slate-900 to-indigo-900/10',
+    borderHover: 'hover:border-sky-500/50',
+    iconBg: 'bg-sky-500/10 border-sky-500/30 text-sky-400',
+    tagColor: 'text-sky-400 bg-sky-950/60 border-sky-800/40',
+    badgeColor: 'bg-sky-950 text-sky-400 border-sky-800/60',
+    modulesCount: 1,
+    stats: {
+      flashcards: 23,
+      questions: 10,
+      topics: 4,
+      exercises: 1,
+    },
+    modules: [
+      {
+        id: 'resumo',
+        title: 'Resumo Teórico NP2 + Simulador Cinema',
+        tag: 'Aula 11 • Prof. Anderson',
+        badge: 'Teoria + Prática',
+        description:
+          'Declaração de matrizes, laços aninhados, operadores & e *, ponteiros contíguos na memória e simulador de assentos da sala de cinema.',
+        available: true,
+      },
+    ],
+  },
+  {
+    id: 'redes-sistemas-distribuidos-np2',
+    title: 'Redes: Sub-redes IPv4 & Cabeçalho',
+    code: 'RSD-202',
+    semester: 'NP2',
+    category: 'Infraestrutura & Redes',
+    description:
+      'Cálculo de sub-redes com máscara /22 (255.255.252.0), hosts válidos e broadcast. Anatomia campo a campo do cabeçalho IPv4 (20-60B, TTL com tracert, Protocol).',
+    status: 'available',
+    accentColor: 'text-cyan-400',
+    gradient: 'from-cyan-600/10 via-slate-900 to-blue-900/10',
+    borderHover: 'hover:border-cyan-500/50',
+    iconBg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400',
+    tagColor: 'text-cyan-400 bg-cyan-950/60 border-cyan-800/40',
+    badgeColor: 'bg-cyan-950 text-cyan-400 border-cyan-800/60',
+    modulesCount: 1,
+    stats: {
+      flashcards: 34,
+      questions: 10,
+      topics: 4,
+      exercises: 4,
+    },
+    modules: [
+      {
+        id: 'resumo',
+        title: 'Resumo Teórico NP2 + Calculadora /22',
+        tag: 'Lousas 19/10, 29/10, 03/11',
+        badge: 'Teoria + Prática',
+        description:
+          'Cálculo detalhado de sub-redes /22 com salto no 3º octeto e análise de todos os campos do cabeçalho IPv4.',
+        available: true,
+      },
+    ],
+  },
+  {
+    id: 'eng-software-np2',
+    title: 'Engenharia de Software: UML & Arquitetura',
+    code: 'ES-202',
+    semester: 'NP2',
+    category: 'Engenharia de Software Ágil',
+    description:
+      'Diagrama de Sequência (linha de vida, métodos, ALT), Diagrama de Classes (atributos e métodos), RNF, Modelo 4+1 visões e Padrão MVC vs Camadas.',
+    status: 'available',
+    accentColor: 'text-emerald-400',
+    gradient: 'from-emerald-600/10 via-slate-900 to-teal-900/10',
+    borderHover: 'hover:border-emerald-500/50',
+    iconBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
+    tagColor: 'text-emerald-400 bg-emerald-950/60 border-emerald-800/40',
+    badgeColor: 'bg-emerald-950 text-emerald-400 border-emerald-800/60',
+    modulesCount: 1,
+    stats: {
+      topics: 4,
+    },
+    modules: [
+      {
+        id: 'resumo',
+        title: 'Resumo Teórico Oficial NP2',
+        tag: 'Lousas 06/10, 20/10, 27/10',
+        badge: 'Teoria Direta',
+        description:
+          'UML em ágil (Caso de Uso -> Sequência -> Classes), bloco ALT, Padrão MVC detalhado e modelo 4+1 visões.',
+        available: true,
+      },
+    ],
+  },
+  {
+    id: 'pesquisa-ti',
+    title: 'Pesquisa, Tecnologia e Informação',
+    code: 'PTI-101',
+    semester: 'NP2',
+    category: 'Metodologia & Pesquisa',
+    description:
+      'Pasta vazia no Google Drive da turma até o momento. Aguardando disponibilização de materiais pelo professor.',
+    status: 'upcoming',
+    accentColor: 'text-purple-400',
+    gradient: 'from-purple-600/10 via-slate-900 to-indigo-900/10',
+    borderHover: 'hover:border-purple-500/50',
+    iconBg: 'bg-purple-500/10 border-purple-500/30 text-purple-400',
+    tagColor: 'text-purple-400 bg-purple-950/60 border-purple-800/40',
+    badgeColor: 'bg-purple-950 text-purple-400 border-purple-800/60',
+    modulesCount: 0,
+    stats: {},
+    modules: [],
+  },
+
+  // ==========================================
+  // DISCIPLINAS NP1 (1º BIMESTRE - CONTEÚDO ANTERIOR PRESERVADO)
+  // ==========================================
   {
     id: 'banco-de-dados',
-    title: 'Banco de Dados & NoSQL',
+    title: 'Banco de Dados & NoSQL (B1/NP1)',
     code: 'BD-101',
-    semester: 'B1',
-    category: 'Banco de Dados',
+    semester: 'NP1',
+    category: 'Modelagem Conceitual',
     description:
       'Modelagem relacional (DER e brModelo), NoSQL (Key-Value, Documentos, Colunas, Grafos), cardinalidades e pegadinhas da prova.',
     status: 'available',
     accentColor: 'text-blue-400',
-    gradient: 'from-blue-600/20 via-slate-900 to-cyan-900/10',
-    borderHover: 'hover:border-blue-500/60',
-    iconBg: 'bg-blue-600/20 border-blue-500/40 text-blue-400',
-    tagColor: 'text-blue-400 bg-blue-950/80 border-blue-800/60',
-    badgeColor: 'bg-blue-950 text-blue-400 border-blue-800/80',
+    gradient: 'from-blue-600/10 via-slate-900 to-cyan-900/10',
+    borderHover: 'hover:border-blue-500/50',
+    iconBg: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
+    tagColor: 'text-blue-400 bg-blue-950/60 border-blue-800/40',
+    badgeColor: 'bg-blue-950 text-blue-400 border-blue-800/60',
     modulesCount: 4,
     stats: {
       flashcards: 43,
@@ -26,7 +194,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     modules: [
       {
         id: 'resumo',
-        title: 'Resumo Teórico da Matéria',
+        title: 'Resumo Teórico B1',
         tag: '7 Tópicos Essenciais',
         badge: 'Teoria Direta',
         description:
@@ -35,7 +203,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'simulado',
-        title: 'Simulado Oficial da Matéria',
+        title: 'Simulado Oficial B1',
         tag: '7 Questões • Vale 10,0',
         badge: 'Simulação de Prova',
         description:
@@ -44,7 +212,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'flashcards',
-        title: 'Flashcards de Fixação da Matéria',
+        title: 'Flashcards de Fixação B1',
         tag: '43 Cartas • 7 Variedades',
         badge: 'Repetição Ativa',
         description:
@@ -53,7 +221,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'diagramas',
-        title: 'Treino de Diagramas da Matéria',
+        title: 'Treino de Diagramas (brModelo)',
         tag: '52 Exercícios Práticos',
         badge: 'Modelagem Interativa',
         description:
@@ -64,19 +232,19 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
   },
   {
     id: 'redes-sistemas-distribuidos',
-    title: 'Redes e Sistemas Distribuídos',
+    title: 'Redes e Sistemas Distribuídos (B1/NP1)',
     code: 'RSD-201',
-    semester: 'B1',
-    category: 'Infraestrutura & Redes',
+    semester: 'NP1',
+    category: 'Modelos OSI e TCP/IP',
     description:
       'Modelo OSI (7 camadas), TCP/IP (5 camadas), dispositivos intermediários vs hosts, LAN/WAN/Intranet, cálculo de IPv4 com máscara (/16), IPs privados (RFC 1918) e pegadinhas do Prof. Fábio.',
     status: 'available',
     accentColor: 'text-cyan-400',
-    gradient: 'from-cyan-600/20 via-slate-900 to-blue-900/10',
-    borderHover: 'hover:border-cyan-500/60',
-    iconBg: 'bg-cyan-600/20 border-cyan-500/40 text-cyan-400',
-    tagColor: 'text-cyan-400 bg-cyan-950/80 border-cyan-800/60',
-    badgeColor: 'bg-cyan-950 text-cyan-400 border-cyan-800/80',
+    gradient: 'from-cyan-600/10 via-slate-900 to-blue-900/10',
+    borderHover: 'hover:border-cyan-500/50',
+    iconBg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400',
+    tagColor: 'text-cyan-400 bg-cyan-950/60 border-cyan-800/40',
+    badgeColor: 'bg-cyan-950 text-cyan-400 border-cyan-800/60',
     modulesCount: 4,
     stats: {
       flashcards: 34,
@@ -87,7 +255,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     modules: [
       {
         id: 'flashcards',
-        title: 'Flashcards de Fixação da Matéria',
+        title: 'Flashcards de Fixação B1',
         tag: '34 Cartas • 7 Variedades',
         badge: 'Repetição Ativa',
         description:
@@ -96,7 +264,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'simulado',
-        title: 'Simulado Oficial da Matéria',
+        title: 'Simulado Oficial B1',
         tag: '10 Questões • Prova do Fábio',
         badge: 'Simulação de Prova',
         description:
@@ -105,7 +273,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'resumo',
-        title: 'Resumo Teórico da Matéria',
+        title: 'Resumo Teórico B1',
         tag: '8 Tópicos + Cola Rápida',
         badge: 'Teoria Direta',
         description:
@@ -125,19 +293,19 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
   },
   {
     id: 'programacao-em-c',
-    title: 'Programação em C',
+    title: 'Programação em C (B1/NP1)',
     code: 'PC-101',
-    semester: 'B1',
+    semester: 'NP1',
     category: 'Linguagem C & Algoritmos',
     description:
       'Declaração de tipos, operador resto (%), operadores relacionais e lógicos, if/else, switch-case (break e fall-through), laços (while, do-while, for), vetores e matrizes bidimensionais com foco na prova.',
     status: 'available',
     accentColor: 'text-sky-400',
-    gradient: 'from-sky-600/20 via-slate-900 to-indigo-900/10',
-    borderHover: 'hover:border-sky-500/60',
-    iconBg: 'bg-sky-600/20 border-sky-500/40 text-sky-400',
-    tagColor: 'text-sky-400 bg-sky-950/80 border-sky-800/60',
-    badgeColor: 'bg-sky-950 text-sky-400 border-sky-800/80',
+    gradient: 'from-sky-600/10 via-slate-900 to-indigo-900/10',
+    borderHover: 'hover:border-sky-500/50',
+    iconBg: 'bg-sky-500/10 border-sky-500/30 text-sky-400',
+    tagColor: 'text-sky-400 bg-sky-950/60 border-sky-800/40',
+    badgeColor: 'bg-sky-950 text-sky-400 border-sky-800/60',
     modulesCount: 4,
     stats: {
       flashcards: 23,
@@ -148,7 +316,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     modules: [
       {
         id: 'resumo',
-        title: 'Resumo Teórico da Matéria',
+        title: 'Resumo Teórico B1',
         tag: '10 Questões da Prova',
         badge: 'Teoria Direta',
         description:
@@ -157,7 +325,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'simulado',
-        title: 'Simulado Oficial da Matéria',
+        title: 'Simulado Oficial B1',
         tag: '10 Questões • Vale 10,0',
         badge: 'Simulação de Prova',
         description:
@@ -166,7 +334,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
       },
       {
         id: 'flashcards',
-        title: 'Flashcards de Fixação da Matéria',
+        title: 'Flashcards de Fixação B1',
         tag: '23 Cartas • 7 Variedades',
         badge: 'Repetição Ativa',
         description:
@@ -181,189 +349,6 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
         description:
           'Sistema para treinar as 2 questões discursivas (Vetor e Matriz 3x3), com teclado móvel de atalhos {}, (), [], &, verificador de critérios e terminal GCC de execução.',
         available: true,
-      },
-    ],
-  },
-  {
-    id: 'eng-software',
-    title: 'Engenharia de Software',
-    code: 'ES-201',
-    semester: 'B1',
-    category: 'Engenharia',
-    description:
-      'Metodologias ágeis (Scrum, Kanban), engenharia de requisitos, histórias de usuário, critérios de aceite e modelagem de casos de uso.',
-    status: 'upcoming',
-    accentColor: 'text-emerald-400',
-    gradient: 'from-emerald-600/20 via-slate-900 to-teal-900/10',
-    borderHover: 'hover:border-emerald-500/60',
-    iconBg: 'bg-emerald-600/20 border-emerald-500/40 text-emerald-400',
-    tagColor: 'text-emerald-400 bg-emerald-950/80 border-emerald-800/60',
-    badgeColor: 'bg-emerald-950 text-emerald-400 border-emerald-800/80',
-    modulesCount: 4,
-    stats: {
-      flashcards: 18,
-      questions: 10,
-      topics: 5,
-      exercises: 15,
-    },
-    modules: [
-      {
-        id: 'flashcards',
-        title: 'Flashcards de Métodos Ágeis',
-        tag: '18 Cartas',
-        badge: 'Em Preparação',
-        description:
-          'Cerimônias do Scrum, papéis (PO, SM, Dev), artefatos e estimativas ágeis.',
-        available: false,
-      },
-      {
-        id: 'resumo',
-        title: 'Resumo de Requisitos & Casos de Uso',
-        tag: '5 Tópicos',
-        badge: 'Em Preparação',
-        description:
-          'Requisitos funcionais vs não-funcionais, regras de negócio e diagramas UML.',
-        available: false,
-      },
-      {
-        id: 'simulado',
-        title: 'Simulado de Engenharia de Software',
-        tag: '10 Questões',
-        badge: 'Em Preparação',
-        description:
-          'Questões contextualizadas de provas anteriores sobre ciclo de vida de software.',
-        available: false,
-      },
-      {
-        id: 'diagramas',
-        title: 'Prática de Casos de Uso (UML)',
-        tag: '15 Exercícios',
-        badge: 'Em Preparação',
-        description:
-          'Prática interativa de atores, casos de uso, inclusões («include») e extensões («extend»).',
-        available: false,
-      },
-    ],
-  },
-  {
-    id: 'estrutura-dados',
-    title: 'Estrutura de Dados & Algoritmos',
-    code: 'ED-301',
-    semester: 'B2',
-    category: 'Ciência da Computação',
-    description:
-      'Análise assintótica (Notação Big-O), vetores, listas encadeadas, pilhas, filas, recursão, árvores binárias e algoritmos de busca.',
-    status: 'upcoming',
-    accentColor: 'text-purple-400',
-    gradient: 'from-purple-600/20 via-slate-900 to-indigo-900/10',
-    borderHover: 'hover:border-purple-500/60',
-    iconBg: 'bg-purple-600/20 border-purple-500/40 text-purple-400',
-    tagColor: 'text-purple-400 bg-purple-950/80 border-purple-800/60',
-    badgeColor: 'bg-purple-950 text-purple-400 border-purple-800/80',
-    modulesCount: 4,
-    stats: {
-      flashcards: 24,
-      questions: 12,
-      topics: 6,
-      exercises: 20,
-    },
-    modules: [
-      {
-        id: 'flashcards',
-        title: 'Flashcards de Notação Big-O & Estruturas',
-        tag: '24 Cartas',
-        badge: 'Em Preparação',
-        description:
-          'Memorização de complexidades de tempo/espaço e funcionamento de pilhas e filas.',
-        available: false,
-      },
-      {
-        id: 'resumo',
-        title: 'Resumo de Ponteiros & Árvores',
-        tag: '6 Tópicos',
-        badge: 'Em Preparação',
-        description:
-          'Alocação dinâmica, nós encadeados, percursos em árvore (pré, em e pós-ordem).',
-        available: false,
-      },
-      {
-        id: 'simulado',
-        title: 'Simulado de Estrutura de Dados',
-        tag: '12 Questões',
-        badge: 'Em Preparação',
-        description:
-          'Questões de raciocínio lógico e rastreio de ponteiros com gabarito comentado.',
-        available: false,
-      },
-      {
-        id: 'diagramas',
-        title: 'Laboratório de Algoritmos',
-        tag: '20 Exercícios',
-        badge: 'Em Preparação',
-        description:
-          'Exercícios de ordenação e simulação de memória visual.',
-        available: false,
-      },
-    ],
-  },
-  {
-    id: 'poo-programacao',
-    title: 'Programação Orientada a Objetos',
-    code: 'POO-401',
-    semester: 'B1',
-    category: 'Desenvolvimento',
-    description:
-      'Paradigmas de orientação a objetos: classes, objetos, atributos, métodos, encapsulamento, herança, polimorfismo e interfaces.',
-    status: 'upcoming',
-    accentColor: 'text-amber-400',
-    gradient: 'from-amber-600/20 via-slate-900 to-yellow-900/10',
-    borderHover: 'hover:border-amber-500/60',
-    iconBg: 'bg-amber-600/20 border-amber-500/40 text-amber-400',
-    tagColor: 'text-amber-400 bg-amber-950/80 border-amber-800/60',
-    badgeColor: 'bg-amber-950 text-amber-400 border-amber-800/80',
-    modulesCount: 4,
-    stats: {
-      flashcards: 22,
-      questions: 8,
-      topics: 4,
-      exercises: 16,
-    },
-    modules: [
-      {
-        id: 'flashcards',
-        title: 'Flashcards dos 4 Pilares de POO',
-        tag: '22 Cartas',
-        badge: 'Em Preparação',
-        description:
-          'Herança vs Composição, Sobrecarga vs Sobrescrita, Modificadores de Acesso.',
-        available: false,
-      },
-      {
-        id: 'resumo',
-        title: 'Resumo Teórico de POO & SOLID',
-        tag: '4 Tópicos',
-        badge: 'Em Preparação',
-        description:
-          'Conceitos fundamentais de orientação a objetos e boas práticas de arquitetura.',
-        available: false,
-      },
-      {
-        id: 'simulado',
-        title: 'Simulado de Conceitos & Código POO',
-        tag: '8 Questões',
-        badge: 'Em Preparação',
-        description:
-          'Trechos de código para identificar saídas, polimorfismo e erros comuns de compilação.',
-        available: false,
-      },
-      {
-        id: 'diagramas',
-        title: 'Modelagem de Classes (UML)',
-        tag: '16 Exercícios',
-        badge: 'Em Preparação',
-        description:
-          'Construção de diagramas de classes com visibilidade (+, -, #) e relacionamentos.',
-        available: false,
       },
     ],
   },

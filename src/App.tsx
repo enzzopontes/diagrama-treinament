@@ -19,6 +19,11 @@ import { ProgCResumoView } from './components/ProgCResumoView';
 import { ProgCSimuladoView } from './components/ProgCSimuladoView';
 import { ProgCFlashcardsView } from './components/ProgCFlashcardsView';
 import { ProgCLabView } from './components/ProgCLabView';
+import { BdNp2ResumoView } from './components/BdNp2ResumoView';
+import { SqlPracticeLabView } from './components/SqlPracticeLabView';
+import { ProgCNp2ResumoView } from './components/ProgCNp2ResumoView';
+import { RedesNp2ResumoView } from './components/RedesNp2ResumoView';
+import { EngSoftNp2ResumoView } from './components/EngSoftNp2ResumoView';
 import { BottomBarAdjusterModal } from './components/BottomBarAdjusterModal';
 import { AmbientBackground } from './components/AmbientBackground';
 import { DEFAULT_SUBJECTS } from './data/subjects';
@@ -45,7 +50,7 @@ export const App: React.FC = () => {
 
   return (
     <>
-      {/* Fundo estático e spotlight de mouse elegante que oculta ao passar sobre elementos */}
+      {/* Fundo estático sóbrio e profissional */}
       <AmbientBackground />
 
       {/* Modal Inteligente de Ajuste da Barra de 3 Botões do Celular */}
@@ -54,7 +59,7 @@ export const App: React.FC = () => {
         onClose={() => setIsBottomBarModalOpen(false)}
       />
 
-      {/* 1. Hub Principal: Contém estritamente as MATÉRIAS */}
+      {/* 1. Hub Principal: Contém estritamente as MATÉRIAS com filtro NP1 / NP2 */}
       {currentModule === 'hub' && (
         <HubView
           onSelectSubject={(subject) => {
@@ -81,7 +86,18 @@ export const App: React.FC = () => {
 
       {/* 3. Módulo de Resumo Teórico da Matéria Selecionada */}
       {currentModule === 'resumo' &&
-        (selectedSubject.id === 'programacao-em-c' ? (
+        (selectedSubject.id === 'banco-de-dados-np2' ? (
+          <BdNp2ResumoView
+            onBack={() => setCurrentModule('subject')}
+            onOpenSqlLab={() => setCurrentModule('diagramas')}
+          />
+        ) : selectedSubject.id === 'programacao-em-c-np2' ? (
+          <ProgCNp2ResumoView onBack={() => setCurrentModule('subject')} />
+        ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
+          <RedesNp2ResumoView onBack={() => setCurrentModule('subject')} />
+        ) : selectedSubject.id === 'eng-software-np2' ? (
+          <EngSoftNp2ResumoView onBack={() => setCurrentModule('subject')} />
+        ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCResumoView
             onBack={() => setCurrentModule('subject')}
             onOpenBottomBarSettings={openBottomBarSettings}
@@ -137,7 +153,16 @@ export const App: React.FC = () => {
 
       {/* 6. Módulo de Treino Prático / Laboratório da Matéria Selecionada */}
       {currentModule === 'diagramas' &&
-        (selectedSubject.id === 'programacao-em-c' ? (
+        (selectedSubject.id === 'banco-de-dados-np2' ? (
+          <SqlPracticeLabView
+            onBack={() => setCurrentModule('subject')}
+            onOpenBottomBarSettings={openBottomBarSettings}
+          />
+        ) : selectedSubject.id === 'programacao-em-c-np2' ? (
+          <ProgCNp2ResumoView onBack={() => setCurrentModule('subject')} />
+        ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
+          <RedesNp2ResumoView onBack={() => setCurrentModule('subject')} />
+        ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCLabView
             onBack={() => setCurrentModule('subject')}
             onOpenBottomBarSettings={openBottomBarSettings}
@@ -149,7 +174,7 @@ export const App: React.FC = () => {
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : (
-          <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#080b11]/90 text-slate-100 font-sans antialiased relative z-10">
+          <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#090d16] text-slate-100 font-sans antialiased relative z-10">
             <ReactFlowProvider>
               {/* Header com botão de voltar para a matéria */}
               <Header onBackToHub={() => setCurrentModule('subject')} />
