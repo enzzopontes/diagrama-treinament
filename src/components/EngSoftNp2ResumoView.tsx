@@ -127,13 +127,13 @@ export const EngSoftNp2ResumoView: React.FC<EngSoftNp2ResumoViewProps> = ({ onBa
         <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900/60 to-teal-950/40 border border-emerald-500/30 shadow-lg shadow-emerald-950/20">
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2">
             <Sparkles size={14} />
-            <span>PROVA OFICIAL APLICADA • ANÁLISE E DESENVOLVIMENTO DE SISTEMAS</span>
+            <span>PROVA OFICIAL IMPRESSA • UNIP SÃO JOSÉ DO RIO PRETO • PROF. VALTER CANHIZARES FILHO</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            Guia de Memorização & Gabarito Comentado NP2
+            Prova Oficial NP2: 100% Idêntica à Folha Impressa
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
-            As 10 questões reais da prova com a resposta oficial, justificativa técnica da banca e o gatilho de decoreba rápida para você não errar nenhuma alternativa.
+            As 10 questões abaixo são exatamente as mesmas da prova física entregue em sala (Questões 1 a 5 na frente, 6 a 10 no verso). Veja o gabarito oficial fundamentado item por item.
           </p>
 
           {/* Gabarito Rápido em Linha */}
