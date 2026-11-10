@@ -15,10 +15,10 @@ export interface Np2SimuladoQuestion {
   enunciado: string;
   codeSnippet?: string;
   options: {
-    id: 'a' | 'b' | 'c' | 'd';
+    id: 'a' | 'b' | 'c' | 'd' | 'e';
     text: string;
   }[];
-  correctAnswer: 'a' | 'b' | 'c' | 'd';
+  correctAnswer: 'a' | 'b' | 'c' | 'd' | 'e';
   explanation: string;
   decorebaRapida: string;
 }

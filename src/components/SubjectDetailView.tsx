@@ -235,8 +235,8 @@ export const SubjectDetailView: React.FC<SubjectDetailViewProps> = ({
           <div className="mt-6 p-4 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-start gap-3 text-xs text-sky-200">
             <Info size={16} className="text-sky-400 shrink-0 mt-0.5" />
             <p>
-              <strong className="text-white">Dica de Prova do Prof. Anderson:</strong>{' '}
-              O operador <code>&</code> obtém o endereço na RAM; o operador <code>*</code> acessa o conteúdo daquele endereço. Matrizes são alocadas em bloco contíguo: laço externo para linhas (i) e interno para colunas (j).
+              <strong className="text-white">Dica de Prova do Prof. Anderson (Simulado 2º Bimestre):</strong>{' '}
+              A prova foca em 3 temas: <strong>Matrizes</strong> (último elemento <code>[L-1][C-1]</code>, <code>i==j</code> diagonal, <code>t[j][i]</code> transposta), <strong>Ponteiros</strong> (<code>&</code> endereço, <code>*</code> conteúdo, <code>%p</code> no printf, sem <code>*</code> no parâmetro não altera o original) e <strong>Arquivos</strong> (<code>"w"</code> apaga tudo, <code>"a"</code> anexa no final, checagem sempre <code>if (arq == NULL)</code>).
             </p>
           </div>
         )}

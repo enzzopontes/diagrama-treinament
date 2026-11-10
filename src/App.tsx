@@ -132,7 +132,7 @@ export const App: React.FC = () => {
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
           <Np2SimuladoView
-            title="Simulado de C: Matrizes & Memória"
+            title="Simulado Oficial de C: 20 Questões"
             subjectCode="PC-201"
             questions={PROG_C_NP2_SIMULADO_QUESTIONS}
             onBack={() => setCurrentModule('subject')}
@@ -146,7 +146,7 @@ export const App: React.FC = () => {
           />
         ) : selectedSubject.id === 'eng-software-np2' ? (
           <Np2SimuladoView
-            title="Simulado de Engenharia de Software NP2"
+            title="Simulado Oficial: Prova NP2 (10 Questões)"
             subjectCode="ES-202"
             questions={ENG_SOFT_NP2_SIMULADO_QUESTIONS}
             onBack={() => setCurrentModule('subject')}
@@ -181,7 +181,7 @@ export const App: React.FC = () => {
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
           <Np2FlashcardsView
-            title="Flashcards: Matrizes & Ponteiros em C"
+            title="Flashcards: Matrizes, Ponteiros e Arquivos em C"
             subjectCode="PC-201"
             data={PROG_C_NP2_FLASHCARDS}
             accentColor="text-sky-400"
@@ -197,7 +197,7 @@ export const App: React.FC = () => {
           />
         ) : selectedSubject.id === 'eng-software-np2' ? (
           <Np2FlashcardsView
-            title="Flashcards: UML, Sequência & Arquitetura"
+            title="Flashcards: Prova Oficial NP2 (Gabarito & Macetes)"
             subjectCode="ES-202"
             data={ENG_SOFT_NP2_FLASHCARDS}
             accentColor="text-emerald-400"

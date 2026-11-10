@@ -29,7 +29,7 @@ export const Np2SimuladoView: React.FC<Np2SimuladoViewProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, 'a' | 'b' | 'c' | 'd'>
+    Record<number, 'a' | 'b' | 'c' | 'd' | 'e'>
   >({});
   const [studyMode, setStudyMode] = useState(true); // Feedback imediato por padrão
   const [isFinished, setIsFinished] = useState(false);
@@ -39,7 +39,7 @@ export const Np2SimuladoView: React.FC<Np2SimuladoViewProps> = ({
   const currentSelected = selectedAnswers[currentQuestion.id];
   const isAnswered = currentSelected !== undefined;
 
-  const handleSelectOption = (optId: 'a' | 'b' | 'c' | 'd') => {
+  const handleSelectOption = (optId: 'a' | 'b' | 'c' | 'd' | 'e') => {
     if (isFinished) return;
     // Em modo estudo, se já respondeu, permite re-selecionar ou mantém
     setSelectedAnswers((prev) => ({
@@ -195,7 +195,7 @@ export const Np2SimuladoView: React.FC<Np2SimuladoViewProps> = ({
               Simulado Concluído!
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mb-6">
-              Confira seu desempenho nas 10 questões no estilo da prova NP2.
+              Confira seu desempenho nas {totalQuestions} questões no estilo da prova NP2.
             </p>
 
             <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto mb-6">
