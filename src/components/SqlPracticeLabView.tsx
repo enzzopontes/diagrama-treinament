@@ -173,7 +173,7 @@ export const SqlPracticeLabView: React.FC<SqlPracticeLabViewProps> = ({ onBack }
   }, [activeTab, selectedSchemaTable]);
 
   return (
-    <div className="w-screen h-screen h-[100dvh] overflow-y-auto bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30">
+    <div className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30">
       {/* Top Bar Editorial Clean */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#090d16]/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto h-14 px-3 sm:px-6 flex items-center justify-between gap-3">

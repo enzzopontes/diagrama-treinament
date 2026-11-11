@@ -105,7 +105,7 @@ export const Np2FlashcardsView: React.FC<Np2FlashcardsViewProps> = ({
     totalCards > 0 ? Math.round((knownCardIds.length / data.length) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col touch-scroll pb-safe">
       {/* Header Fixo */}
       <header className="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">

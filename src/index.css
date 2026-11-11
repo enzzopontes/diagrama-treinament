@@ -22,6 +22,9 @@ html, body, #root {
   height: 100dvh;
   min-height: 100dvh;
   overflow: hidden;
+  background: #080b11 !important;
+  overscroll-behavior: none !important;
+  overscroll-behavior-y: none !important;
   background-color: var(--bg-primary);
   color: #f1f5f9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -45,13 +48,13 @@ button, a, input, textarea, select {
   padding-top: max(env(safe-area-inset-top, 0px), 12px);
 }
 .pb-safe {
-  padding-bottom: max(env(safe-area-inset-bottom, 0px), var(--bottom-nav-safe, 76px)) !important;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--bottom-nav-safe, 40px)) !important;
 }
 .mb-safe {
-  margin-bottom: max(env(safe-area-inset-bottom, 0px), var(--bottom-nav-safe, 76px)) !important;
+  margin-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--bottom-nav-safe, 40px)) !important;
 }
 .bottom-safe {
-  bottom: max(env(safe-area-inset-bottom, 0px), var(--bottom-nav-safe, 76px)) !important;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--bottom-nav-safe, 40px)) !important;
 }
 .pl-safe {
   padding-left: max(env(safe-area-inset-left, 0px), 16px);
@@ -61,6 +64,10 @@ button, a, input, textarea, select {
 }
 
 /* Utilitário para Esconder Scrollbar Mantendo a Rolagem */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

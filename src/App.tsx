@@ -34,6 +34,7 @@ import { BottomBarAdjusterModal } from './components/BottomBarAdjusterModal';
 import { AmbientBackground } from './components/AmbientBackground';
 import { DEFAULT_SUBJECTS } from './data/subjects';
 import { getSavedBottomNavSettings } from './utils/bottomNavDetector';
+import { navigateTo, setupRouteListener } from './utils/router';
 import type { AppModule, SubjectItem } from './types/navigation';
 
 export const App: React.FC = () => {
@@ -45,9 +46,19 @@ export const App: React.FC = () => {
   const [isBottomBarModalOpen, setIsBottomBarModalOpen] = useState(false);
   const [labInitialQuestion, setLabInitialQuestion] = useState<9 | 10>(9);
 
-  // Inicializa a detecção de botões de navegação no primeiro carregamento
+  // Inicializa a detecção de botões de navegação no primeiro carregamento e ouve mudanças de rota
   useEffect(() => {
     getSavedBottomNavSettings();
+    const cleanup = setupRouteListener((route) => {
+      if (route.subjectId) {
+        const found = DEFAULT_SUBJECTS.find((s) => s.id === route.subjectId);
+        if (found) {
+          setSelectedSubject(found);
+        }
+      }
+      setCurrentModule(route.module);
+    });
+    return cleanup;
   }, []);
 
   const openBottomBarSettings = () => {
@@ -71,10 +82,12 @@ export const App: React.FC = () => {
           onSelectSubject={(subject) => {
             setSelectedSubject(subject);
             setCurrentModule('subject');
+            navigateTo(`/${subject.id}`);
           }}
           onQuickLaunchModule={(subject, module) => {
             setSelectedSubject(subject);
             setCurrentModule(module);
+            navigateTo(`/${subject.id}/${module}`);
           }}
           onOpenBottomBarSettings={openBottomBarSettings}
         />
@@ -84,8 +97,14 @@ export const App: React.FC = () => {
       {currentModule === 'subject' && (
         <SubjectDetailView
           subject={selectedSubject}
-          onBackToHub={() => setCurrentModule('hub')}
-          onSelectModule={(mod) => setCurrentModule(mod)}
+          onBackToHub={() => {
+            setCurrentModule('hub');
+            navigateTo('/');
+          }}
+          onSelectModule={(mod) => {
+            setCurrentModule(mod);
+            navigateTo(`/${selectedSubject.id}/${mod}`);
+          }}
           onOpenBottomBarSettings={openBottomBarSettings}
         />
       )}
@@ -94,31 +113,64 @@ export const App: React.FC = () => {
       {currentModule === 'resumo' &&
         (selectedSubject.id === 'banco-de-dados-np2' ? (
           <BdNp2ResumoView
-            onBack={() => setCurrentModule('subject')}
-            onOpenSqlLab={() => setCurrentModule('diagramas')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+            onOpenSqlLab={() => {
+              setCurrentModule('diagramas');
+              navigateTo(`/${selectedSubject.id}/diagramas`);
+            }}
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
-          <ProgCNp2ResumoView onBack={() => setCurrentModule('subject')} />
+          <ProgCNp2ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
-          <RedesNp2ResumoView onBack={() => setCurrentModule('subject')} />
+          <RedesNp2ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ) : selectedSubject.id === 'eng-software-np2' ? (
-          <EngSoftNp2ResumoView onBack={() => setCurrentModule('subject')} />
+          <EngSoftNp2ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCResumoView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
             onOpenLab={(qId) => {
               setLabInitialQuestion(qId);
               setCurrentModule('diagramas');
+              navigateTo(`/${selectedSubject.id}/diagramas`);
             }}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos' ? (
           <RedesResumoView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : (
-          <ResumoView onBack={() => setCurrentModule('subject')} />
+          <ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ))}
 
       {/* 4. Módulo do Simulado Oficial da Matéria Selecionada */}
@@ -128,45 +180,69 @@ export const App: React.FC = () => {
             title="Simulado de Banco de Dados: T-SQL & SQL Server"
             subjectCode="BD-201"
             questions={BD_NP2_SIMULADO_QUESTIONS}
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
           <Np2SimuladoView
             title="Simulado Oficial de C: 20 Questões"
             subjectCode="PC-201"
             questions={PROG_C_NP2_SIMULADO_QUESTIONS}
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
           <Np2SimuladoView
             title="Simulado de Redes: Sub-redes & IPv4"
             subjectCode="RSD-202"
             questions={REDES_NP2_SIMULADO_QUESTIONS}
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'eng-software-np2' ? (
           <Np2SimuladoView
             title="Simulado Oficial: Prova NP2 (10 Questões)"
             subjectCode="ES-202"
             questions={ENG_SOFT_NP2_SIMULADO_QUESTIONS}
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCSimuladoView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
             onOpenLab={(qId) => {
               setLabInitialQuestion(qId);
               setCurrentModule('diagramas');
+              navigateTo(`/${selectedSubject.id}/diagramas`);
             }}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos' ? (
           <RedesSimuladoView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : (
-          <SimuladoView onBack={() => setCurrentModule('subject')} />
+          <SimuladoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ))}
 
       {/* 5. Módulo de Flashcards de Fixação da Matéria Selecionada */}
@@ -177,7 +253,10 @@ export const App: React.FC = () => {
             subjectCode="BD-201"
             data={BD_NP2_FLASHCARDS}
             accentColor="text-blue-400"
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
           <Np2FlashcardsView
@@ -185,7 +264,10 @@ export const App: React.FC = () => {
             subjectCode="PC-201"
             data={PROG_C_NP2_FLASHCARDS}
             accentColor="text-sky-400"
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
           <Np2FlashcardsView
@@ -193,7 +275,10 @@ export const App: React.FC = () => {
             subjectCode="RSD-202"
             data={REDES_NP2_FLASHCARDS}
             accentColor="text-cyan-400"
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'eng-software-np2' ? (
           <Np2FlashcardsView
@@ -201,49 +286,87 @@ export const App: React.FC = () => {
             subjectCode="ES-202"
             data={ENG_SOFT_NP2_FLASHCARDS}
             accentColor="text-emerald-400"
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
           />
         ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCFlashcardsView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos' ? (
           <RedesFlashcardsView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : (
-          <FlashcardsB1View onBack={() => setCurrentModule('subject')} />
+          <FlashcardsB1View
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ))}
 
       {/* 6. Módulo de Treino Prático / Laboratório da Matéria Selecionada */}
       {currentModule === 'diagramas' &&
         (selectedSubject.id === 'banco-de-dados-np2' ? (
           <SqlPracticeLabView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : selectedSubject.id === 'programacao-em-c-np2' ? (
-          <ProgCNp2ResumoView onBack={() => setCurrentModule('subject')} />
+          <ProgCNp2ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos-np2' ? (
-          <RedesNp2ResumoView onBack={() => setCurrentModule('subject')} />
+          <RedesNp2ResumoView
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
+          />
         ) : selectedSubject.id === 'programacao-em-c' ? (
           <ProgCLabView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
             initialQuestionId={labInitialQuestion}
           />
         ) : selectedSubject.id === 'redes-sistemas-distribuidos' ? (
           <RedesLabView
-            onBack={() => setCurrentModule('subject')}
+            onBack={() => {
+              setCurrentModule('subject');
+              navigateTo(`/${selectedSubject.id}`);
+            }}
             onOpenBottomBarSettings={openBottomBarSettings}
           />
         ) : (
           <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#090d16] text-slate-100 font-sans antialiased relative z-10">
             <ReactFlowProvider>
               {/* Header com botão de voltar para a matéria */}
-              <Header onBackToHub={() => setCurrentModule('subject')} />
+              <Header
+                onBackToHub={() => {
+                  setCurrentModule('subject');
+                  navigateTo(`/${selectedSubject.id}`);
+                }}
+              />
 
               {/* Painel Colapsável de Enunciado e Regra de Ouro */}
               <ExercisePrompt />

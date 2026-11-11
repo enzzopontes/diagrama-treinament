@@ -16,8 +16,8 @@ const STORAGE_KEY_MODE = 'nexus_bottom_nav_mode';
 const STORAGE_KEY_PADDING = 'nexus_bottom_nav_padding';
 
 // Alturas padrão de respiro
-export const DEFAULT_PADDING_3_BUTTONS = 76; // 48px da barra de botões do Android + 28px de folga estética
-export const DEFAULT_PADDING_GESTURES = 24;  // Barra fina de gestos (iOS / Android 10+)
+export const DEFAULT_PADDING_3_BUTTONS = 80; // 48px da barra de botões do Android + 32px de folga estética
+export const DEFAULT_PADDING_GESTURES = 40;  // Barra fina de gestos (iOS / Android 10+)
 export const DEFAULT_PADDING_DESKTOP = 16;   // Dispositivos desktop com mouse
 
 /**

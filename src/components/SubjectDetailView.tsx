@@ -89,7 +89,7 @@ export const SubjectDetailView: React.FC<SubjectDetailViewProps> = ({
   return (
     <div
       data-page-bg="true"
-      className="w-screen h-screen h-[100dvh] overflow-y-auto bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30 relative z-10"
+      className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30 relative z-10"
     >
       {/* Header Superior Minimalista com Breadcrumb */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#090d16]/90 backdrop-blur-md">

@@ -104,7 +104,7 @@ export const FlashcardsB1View: React.FC<FlashcardsB1ViewProps> = ({ onBack }) =>
   };
 
   return (
-    <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#080b11] text-slate-100 font-sans antialiased selection:bg-indigo-600/30">
+    <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-y-auto touch-scroll pb-safe bg-[#080b11] text-slate-100 font-sans antialiased selection:bg-indigo-600/30">
       {/* Cabeçalho do Módulo */}
       <ModuleHeader
         title="Flashcards de Banco de Dados"

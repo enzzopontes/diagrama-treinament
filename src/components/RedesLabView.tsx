@@ -205,7 +205,7 @@ export const RedesLabView: React.FC<RedesLabViewProps> = ({
   return (
     <div
       data-page-bg="true"
-      className="w-screen h-screen h-[100dvh] overflow-y-auto bg-[#080b11]/80 backdrop-blur-[1px] text-slate-100 flex flex-col font-sans antialiased selection:bg-cyan-600/30 relative z-10"
+      className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#080b11]/80 backdrop-blur-[1px] text-slate-100 flex flex-col font-sans antialiased selection:bg-cyan-600/30 relative z-10"
     >
       <ModuleHeader
         title="Laboratório Interativo & Calculadora IP"

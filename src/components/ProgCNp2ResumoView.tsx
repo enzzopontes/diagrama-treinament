@@ -17,7 +17,7 @@ export const ProgCNp2ResumoView: React.FC<ProgCNp2ResumoViewProps> = ({ onBack }
   const [activeTab, setActiveTab] = useState<'matrizes' | 'ponteiros' | 'arquivos' | 'decoreba'>('matrizes');
 
   return (
-    <div className="w-screen h-screen h-[100dvh] overflow-y-auto bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-sky-600/30">
+    <div className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-sky-600/30">
       {/* Top Bar Editorial */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#090d16]/90 backdrop-blur-md">
         <div className="max-w-4xl mx-auto h-14 px-4 sm:px-6 flex items-center justify-between gap-3">

@@ -74,7 +74,7 @@ export const HubView: React.FC<HubViewProps> = ({
   return (
     <div
       data-page-bg="true"
-      className="w-screen h-screen h-[100dvh] overflow-y-auto bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30 relative z-10"
+      className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30 relative z-10"
     >
       {/* Header Minimalista Estilo Linear/Raycast */}
       <HubHeader
@@ -88,7 +88,7 @@ export const HubView: React.FC<HubViewProps> = ({
       {/* Conteúdo Principal do Hub */}
       <main
         data-page-bg="true"
-        className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 py-6 sm:py-8 flex flex-col"
+        className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 py-6 sm:py-8 flex flex-col pb-24 sm:pb-16"
       >
         {/* Hero Minimalista Editorial */}
         <div className="max-w-3xl mb-6 animate-fade-in">
@@ -365,7 +365,7 @@ export const HubView: React.FC<HubViewProps> = ({
       </main>
 
       {/* Rodapé Minimalista */}
-      <footer className="w-full border-t border-white/[0.06] py-4 px-4 text-center text-xs text-zinc-500 flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto gap-2">
+      <footer className="w-full border-t border-white/[0.06] py-6 sm:py-4 px-4 text-center text-xs text-zinc-500 flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto gap-2 mb-20 sm:mb-0">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-zinc-300">ADS UNIP</span>
           <span className="text-zinc-600">•</span>

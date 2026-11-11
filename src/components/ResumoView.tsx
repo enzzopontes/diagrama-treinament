@@ -236,7 +236,7 @@ export const ResumoView: React.FC<ResumoViewProps> = ({ onBack }) => {
   );
 
   return (
-    <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#090d16] text-slate-100 font-sans antialiased selection:bg-blue-600/30">
+    <div className="w-screen h-screen h-[100dvh] flex flex-col overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-slate-100 font-sans antialiased selection:bg-blue-600/30">
       {/* Cabeçalho do Módulo com Botão Voltar ao Início */}
       <ModuleHeader
         title="Resumo Teórico B1"
