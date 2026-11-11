@@ -177,7 +177,7 @@ export const App: React.FC = () => {
       {currentModule === 'simulado' &&
         (selectedSubject.id === 'banco-de-dados-np2' ? (
           <Np2SimuladoView
-            title="Simulado de Banco de Dados: T-SQL & SQL Server"
+            title="Simulado Oficial: Prova de Consultas SQL"
             subjectCode="BD-201"
             questions={BD_NP2_SIMULADO_QUESTIONS}
             onBack={() => {
@@ -249,7 +249,7 @@ export const App: React.FC = () => {
       {currentModule === 'flashcards' &&
         (selectedSubject.id === 'banco-de-dados-np2' ? (
           <Np2FlashcardsView
-            title="Flashcards: SQL Server & T-SQL"
+            title="Flashcards: Prova Oficial de SQL (Gabarito & Macetes)"
             subjectCode="BD-201"
             data={BD_NP2_FLASHCARDS}
             accentColor="text-blue-400"

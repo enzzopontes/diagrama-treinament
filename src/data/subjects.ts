@@ -6,12 +6,12 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
   // ==========================================
   {
     id: 'banco-de-dados-np2',
-    title: 'Banco de Dados: SQL Server & T-SQL',
+    title: 'Banco de Dados: Prova Oficial de Consultas SQL',
     code: 'BD-201',
     semester: 'NP2',
-    category: 'SQL & Modelagem Relacional',
+    category: 'SQL Server & Modelo Relacional',
     description:
-      'DDL estrutural (Script Prof. Flávio), DQL (SELECT, WHERE, LIKE), Funções de Linha Única (UPPER, LEN, DATEDIFF), ISNULL, CASE WHEN e junções múltiplas (INNER JOIN).',
+      'Prova Oficial completa: Modelo Lógico (PAIS ➔ UF ➔ CIDADE ➔ PESSOA ➔ PEDIDO ➔ ITEM_PEDIDO ➔ PRODUTO), Junção implícita de tabelas, Filtros de data (MONTH/YEAR), ORDER BY duplo (DESC/ASC) e LIKE com ordem de cláusulas.',
     status: 'available',
     accentColor: 'text-blue-400',
     gradient: 'from-blue-600/10 via-slate-900 to-cyan-900/10',
@@ -21,7 +21,7 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     badgeColor: 'bg-blue-950 text-blue-400 border-blue-800/60',
     modulesCount: 4,
     stats: {
-      flashcards: 16,
+      flashcards: 13,
       questions: 10,
       topics: 5,
       exercises: 11,
@@ -29,29 +29,29 @@ export const DEFAULT_SUBJECTS: SubjectItem[] = [
     modules: [
       {
         id: 'resumo',
-        title: 'Resumo Teórico Oficial NP2',
-        tag: 'Aulas 10 a 18 • Prof. Flávio',
-        badge: 'Teoria Direta',
+        title: 'Resumo Teórico & Gabarito Comentado SQL',
+        tag: 'Prova Real • Gabarito 1-B, 2-D, 3-A, 4-D',
+        badge: 'Gabarito Oficial',
         description:
-          'DDL do SQL Server, DQL com filtros, Funções de Linha Única (Texto, Data, Números), ISNULL, CASE WHEN e INNER JOINs das aulas práticas.',
+          'Gabarito completo comentado das questões da prova oficial, análise detalhada das alternativas incorretas, modelo de dados e caminhos de chaves.',
         available: true,
       },
       {
         id: 'flashcards',
-        title: 'Flashcards de Fixação SQL',
-        tag: '16 Cards • DDL, DQL, Funções e JOINs',
+        title: 'Flashcards da Prova Oficial SQL',
+        tag: '13 Cards • Questões, Junções & Macetes',
         badge: 'Memorização Ágil',
         description:
-          'Treine e memorize restrições DDL, sintaxe de LIKE, funções de data, LEN, substituições com ISNULL, CASE WHEN e junções relacionais.',
+          'Memorize as consultas da prova oficial, caminhos de FKs, operadores de data, pegadinhas de produto cartesiano e sintaxe do ORDER BY.',
         available: true,
       },
       {
         id: 'simulado',
-        title: 'Simulado Oficial de Banco de Dados',
-        tag: '10 Questões • Estilo Prova NP2',
-        badge: 'Avaliação & Gabarito',
+        title: 'Simulado Oficial da Prova SQL (10 Questões)',
+        tag: 'Questões Reais da Prova • Gabarito Imediato',
+        badge: 'Simulado Oficial',
         description:
-          'Questões objetivas com feedback imediato, código T-SQL real e justificativa detalhada para testar seus conhecimentos.',
+          'Resolva as questões reais da prova de SQL com código T-SQL real, feedback imediato e decoreba rápida para gabaritar a avaliação.',
         available: true,
       },
       {

@@ -1,416 +1,406 @@
 import type { Np2Flashcard, Np2SimuladoQuestion } from '../types/np2Training';
 
+// ==========================================
+// FLASHCARDS DE FIXAÇÃO: PROVA OFICIAL SQL SERVER
+// Banco de Dados NP2 • Análise e Desenvolvimento de Sistemas
+// ==========================================
+
 export const BD_NP2_FLASHCARDS: Np2Flashcard[] = [
-  // --- DDL & CONSTRAINTS ---
+  // --- QUESTÕES DA PROVA OFICIAL ---
   {
     id: 1,
-    categoria: 'DDL & Restrições',
-    pergunta: 'Qual a diferença entre PRIMARY KEY e UNIQUE no SQL Server?',
+    categoria: 'Prova Oficial • Questão 1',
+    pergunta: 'Como recuperar os nomes das pessoas que moram no estado de SP usando junção implícita?',
     resposta:
-      'PRIMARY KEY garante unicidade e NÃO permite NULL (apenas uma por tabela). UNIQUE também garante unicidade de valores, mas permite um valor NULL (pode haver múltiplas UNIQUE por tabela).',
-    dica: 'PK = identificador único obrigatório (sem NULL). UNIQUE = não aceita duplicata, mas tolera 1 nulo.',
-    codigoExemplo: 'PessoaCpf VARCHAR(14) NOT NULL UNIQUE,\nCONSTRAINT PK_Pessoa PRIMARY KEY (PessoaCod)',
+      'SELECT PESSOA.PessoaNome\nFROM PESSOA, CIDADE\nWHERE PESSOA.CidCod = CIDADE.CidCod\nAND CIDADE.UfSigla = \'SP\';\n\nRegras de ouro:\n1. Precisa da junção: PESSOA.CidCod = CIDADE.CidCod (senão vira produto cartesiano).\n2. A coluna do estado chama UfSigla (não "UF").\n3. Retorna PessoaNome (e não CidNome).',
+    dica: 'Gabarito Q1 = B. Ligue CidCod e filtre UfSigla = \'SP\'.',
+    codigoExemplo: 'SELECT PESSOA.PessoaNome FROM PESSOA, CIDADE\nWHERE PESSOA.CidCod = CIDADE.CidCod AND CIDADE.UfSigla = \'SP\';',
   },
   {
     id: 2,
-    categoria: 'DDL & Restrições',
-    pergunta: 'Como funciona a constraint FOREIGN KEY e o que ela garante?',
+    categoria: 'Prova Oficial • Questão 2',
+    pergunta: 'Qual o caminho relacional para conectar PEDIDO a CIDADE e filtrar por mês/ano?',
     resposta:
-      'A FOREIGN KEY (Chave Estrangeira) garante a Integridade Referencial. Ela impede a inserção de códigos que não existam na tabela pai referenciada e bloqueia exclusão de registros pai que tenham filhos vinculados.',
-    dica: 'Exemplo: CidadeId na tabela PESSOA deve existir previamente na tabela CIDADE.',
-    codigoExemplo: 'ALTER TABLE CIDADE\nADD CONSTRAINT FK_Cidade_UF\nFOREIGN KEY (UFSigla) REFERENCES UNIDADE_FEDERATIVA(UFSigla);',
+      'Caminho em cadeia de 3 tabelas:\nPEDIDO.PessoaCod = PESSOA.PessoaCod\nAND PESSOA.CidCod = CIDADE.CidCod\n\nFiltro de data:\nAND MONTH(PEDIDODATACAD) = 3\nAND YEAR(PEDIDODATACAD) = 2026\nAND CIDADE.UfSigla = \'RJ\';\n\nPEDIDO não liga direto com CIDADE: precisa passar por PESSOA!',
+    dica: 'Gabarito Q2 = D. PEDIDO ➔ PESSOA ➔ CIDADE com MONTH=3 e YEAR=2026.',
+    codigoExemplo: 'WHERE PEDIDO.PESSOACOD = PESSOA.PESSOACOD\nAND PESSOA.CidCod = CIDADE.CidCod\nAND CIDADE.UfSigla = \'RJ\'\nAND MONTH(PEDIDODATACAD) = 3 AND YEAR(PEDIDODATACAD) = 2026',
   },
   {
     id: 3,
-    categoria: 'DDL & Restrições',
-    pergunta: 'O que faz a restrição CHECK em uma coluna do SQL Server?',
+    categoria: 'Prova Oficial • Questão 3',
+    pergunta: 'Como ordenar por dois critérios: valor total decrescente e data crescente como desempate?',
     resposta:
-      'A constraint CHECK valida uma regra ou condição booleana antes de permitir INSERT ou UPDATE. Se a condição for falsa, o banco rejeita a transação.',
-    dica: 'Ex: garantir que salário seja positivo ou sexo apenas M/F.',
-    codigoExemplo: 'CONSTRAINT CK_ProdPreco CHECK (ProdPreco > 0)\nCONSTRAINT CK_PessoaSexo CHECK (PessoaSexo IN (\'M\', \'F\'))',
+      'ORDER BY PEDIDO.PEDIDOVALORTOTAL DESC, PEDIDO.PEDIDODATACAD ASC;\n\nRegra:\n• 1º critério: Valor Total DESC (maior para o menor).\n• 2º critério (desempate): Data ASC (mais antigo para o mais novo).\n\nNunca esqueça a junção WHERE PEDIDO.PESSOACOD = PESSOA.PESSOACOD para não gerar produto cartesiano.',
+    dica: 'Gabarito Q3 = A. Primeiro critério DESC, vírgula, segundo critério ASC.',
+    codigoExemplo: 'ORDER BY PEDIDO.PEDIDOVALORTOTAL DESC, PEDIDO.PEDIDODATACAD ASC;',
   },
   {
     id: 4,
-    categoria: 'DDL & Restrições',
-    pergunta: 'Para que serve a restrição DEFAULT no SQL Server?',
+    categoria: 'Prova Oficial • Questão 4',
+    pergunta: 'Qual a ordem correta entre WHERE e ORDER BY, e por que usar LIKE em vez de "="?',
     resposta:
-      'Atribui automaticamente um valor pré-definido à coluna caso nenhum valor seja fornecido no comando INSERT.',
-    dica: 'Muito comum para data de cadastro ou status ativo.',
-    codigoExemplo: 'PessoaDataCad DATETIME DEFAULT GETDATE(),\nPessoaAtivo CHAR(1) DEFAULT \'S\'',
+      'Ordem obrigatória no SQL:\nSELECT ... FROM ... WHERE ... ORDER BY ...\n(O WHERE SEMPRE vem antes do ORDER BY! Inverter gera erro de sintaxe).\n\nOperador LIKE:\n• LIKE \'A%\': busca quem começa com a letra A (o % atua como curinga).\n• = \'A%\': procura quem se chama literalmente "A%" (não usa curinga).',
+    dica: 'Gabarito Q4 = D. WHERE nome LIKE \'A%\' ORDER BY nome ASC.',
+    codigoExemplo: 'SELECT * FROM clientes\nWHERE nome LIKE \'A%\'\nORDER BY nome ASC;',
   },
-
-  // --- DQL & FILTROS ---
   {
     id: 5,
-    categoria: 'DQL & Filtros',
-    pergunta: 'No operador LIKE, qual a diferença exata entre % e _ (underscore)?',
+    categoria: 'Gabarito Relâmpago',
+    pergunta: 'Qual é o gabarito oficial da prova de SQL da NP2 para bater o olho e gabaritar?',
     resposta:
-      '% (porcentagem) representa ZERO, UM ou MÚLTIPLOS caracteres quaisquer.\n_ (underscore) representa EXATAMENTE UM único caractere em posição específica.',
-    dica: '\'A%\' começa com A. \'_A%\' tem A como 2º caractere. \'%A\' termina com A.',
-    codigoExemplo: '-- Nome cuja 2ª letra é \'A\':\nSELECT * FROM PESSOA WHERE PessoaNome LIKE \'_A%\';',
+      '1-B (SELECT PESSOA.PessoaNome ... PESSOA.CidCod = CIDADE.CidCod AND CIDADE.UfSigla = \'SP\')\n2-D (3 tabelas PEDIDO ➔ PESSOA ➔ CIDADE com MONTH=3 e YEAR=2026)\n3-A (ORDER BY VALOR DESC, DATA ASC com junção)\n4-D (WHERE nome LIKE \'A%\' ORDER BY nome ASC)',
+    dica: 'Sequência das alternativas da prova: B, D, A, D.',
   },
+
+  // --- MODELO RELACIONAL & CAMINHO DE CHAVES ---
   {
     id: 6,
-    categoria: 'DQL & Filtros',
-    pergunta: 'Por que "WHERE coluna = NULL" nunca retorna linhas no SQL?',
+    categoria: 'Modelo Relacional',
+    pergunta: 'Qual o caminho de chaves para rastrear o cliente e cidade a partir de um item de pedido?',
     resposta:
-      'NULL não é um valor, é a AUSÊNCIA de valor (desconhecido). Qualquer comparação aritmética de igualdade com NULL resulta em UNKNOWN (falso). Deve-se usar sempre IS NULL ou IS NOT NULL.',
-    dica: 'Pegadinha clássica de prova: nunca use = NULL, sempre IS NULL!',
-    codigoExemplo: '-- Correto:\nSELECT * FROM PRODUTO WHERE ProdDataValidMax IS NULL;',
+      'ITEM_PEDIDO ➔ (PedidoNum) ➔ PEDIDO ➔ (PessoaCod) ➔ PESSOA ➔ (CidCod) ➔ CIDADE ➔ (UfSigla) ➔ UNIDADE_FEDERATIVA ➔ (PaisCod) ➔ PAIS.\n\nCada junção liga a Chave Estrangeira (FK) na tabela filha à Chave Primária (PK) na tabela pai.',
+    dica: 'Memorize a cadeia: ITEM_PEDIDO ➔ PEDIDO ➔ PESSOA ➔ CIDADE ➔ UF ➔ PAIS.',
   },
   {
     id: 7,
-    categoria: 'DQL & Filtros',
-    pergunta: 'Qual a ordem correta de execução das cláusulas SELECT, FROM, WHERE, ORDER BY?',
+    categoria: 'DQL & Junções',
+    pergunta: 'O que acontece ao listar duas tabelas no FROM sem condição de junção no WHERE?',
     resposta:
-      '1. FROM (identifica tabelas)\n2. WHERE (filtra linhas)\n3. SELECT (projeta colunas)\n4. ORDER BY (ordena resultado final)',
-    dica: 'Por isso não dá para usar alias criado no SELECT dentro do WHERE!',
-    codigoExemplo: 'SELECT PessoaNome AS Nome\nFROM PESSOA\nWHERE PessoaCod > 5 -- Não pode usar Nome aqui!\nORDER BY Nome; -- No ORDER BY pode!',
+      'Ocorre o Produto Cartesiano (CROSS JOIN).\nCada registro da primeira tabela é multiplicado por todos os registros da segunda tabela (N × M linhas), gerando dados duplicados e associações sem sentido no mundo real.',
+    dica: 'Toda tabela adicional no FROM exige uma condição de ligação correspondente no WHERE!',
   },
 
-  // --- FUNÇÕES DE LINHA ÚNICA ---
+  // --- DDL, CONSTRAINTS & FILTROS ESSENCIAIS ---
   {
     id: 8,
-    categoria: 'Funções de Linha Única',
-    pergunta: 'Qual a diferença entre LEN() e DATALENGTH() no SQL Server?',
+    categoria: 'DQL & Filtros',
+    pergunta: 'No operador LIKE, qual a diferença entre % (porcentagem) e _ (underscore)?',
     resposta:
-      'LEN(texto) retorna a QUANTIDADE de caracteres excluindo espaços à direita.\nDATALENGTH(texto) retorna o número de BYTES ocupados na memória (colunas NVARCHAR ocupam 2 bytes por caractere).',
-    dica: 'Prof. Flávio foca em LEN() para tamanho de texto nas provas.',
-    codigoExemplo: 'SELECT LEN(\'UNIP \'); -- Retorna 4\nSELECT DATALENGTH(\'UNIP\'); -- Retorna 4 em VARCHAR',
+      '% (porcentagem): representa ZERO, UM ou MÚLTIPLOS caracteres quaisquer.\n_ (sublinhado): representa EXATAMENTE UM único caractere em posição fixa.\n\nExemplos:\n• \'A%\': começa com A\n• \'%A\': termina com A\n• \'_A%\': a 2ª letra é A',
+    dica: '_ é 1 caractere exato; % é curinga de qualquer tamanho.',
+    codigoExemplo: 'SELECT * FROM PESSOA WHERE PessoaNome LIKE \'_A%\';',
   },
   {
     id: 9,
-    categoria: 'Funções de Linha Única',
-    pergunta: 'Como funciona a função SUBSTRING(string, inicio, tamanho)?',
+    categoria: 'DQL & Filtros',
+    pergunta: 'Por que "WHERE coluna = NULL" nunca retorna nenhuma linha no SQL Server?',
     resposta:
-      'Extrai uma parte do texto. No SQL Server, o índice inicial é 1 (e NÃO 0 como em C/Java!).\n\nSUBSTRING(\'SÃO PAULO\', 1, 3) retorna \'SÃO\'.',
-    dica: 'Atenção: 1º caractere tem posição 1!',
-    codigoExemplo: 'SELECT SUBSTRING(PessoaNome, 1, 5) FROM PESSOA;',
+      'NULL indica ausência de valor (desconhecido). Qualquer comparação de igualdade com NULL resulta em UNKNOWN (falso na filtragem). Deve-se usar sempre IS NULL ou IS NOT NULL.',
+    dica: 'Pegadinha clássica: nunca use = NULL, sempre IS NULL!',
+    codigoExemplo: 'SELECT * FROM PRODUTO WHERE ProdDataValidMax IS NULL;',
   },
   {
     id: 10,
-    categoria: 'Funções de Linha Única',
-    pergunta: 'O que fazem as funções GETDATE(), DAY(), MONTH() e YEAR()?',
+    categoria: 'Funções de Data',
+    pergunta: 'Como funcionam MONTH(), YEAR(), DAY() e DATEDIFF() no SQL Server?',
     resposta:
-      'GETDATE() retorna a data e hora atual do servidor.\nDAY(dt), MONTH(dt) e YEAR(dt) extraem respectivamente o dia, mês e ano numéricos inteiros da data informada.',
-    dica: 'Ex: YEAR(\'2026-11-05\') retorna 2026 (número inteiro).',
-    codigoExemplo: 'SELECT PessoaNome, YEAR(GETDATE()) - YEAR(PessoaDataNasc) AS IdadeAprox FROM PESSOA;',
+      '• MONTH(data): extrai o mês como número inteiro (1 a 12).\n• YEAR(data): extrai o ano com 4 dígitos (ex: 2026).\n• DAY(data): extrai o dia do mês (1 a 31).\n• DATEDIFF(unidade, inicio, fim): calcula a diferença (fim - inicio) em DAY, MONTH, YEAR.',
+    dica: 'Ex: MONTH(\'2026-03-15\') retorna 3. DATEDIFF(DAY, GETDATE(), data_fim) retorna dias restantes.',
+    codigoExemplo: 'SELECT PedidoNum FROM PEDIDO WHERE MONTH(PedidoDataCad) = 3 AND YEAR(PedidoDataCad) = 2026;',
   },
   {
     id: 11,
-    categoria: 'Funções de Linha Única',
-    pergunta: 'Como funciona DATEDIFF(unidade, data_inicio, data_fim)?',
+    categoria: 'Funções de Texto',
+    pergunta: 'Qual a diferença entre LEN() e DATALENGTH() no SQL Server?',
     resposta:
-      'Calcula a diferença entre duas datas na unidade especificada (DAY, MONTH, YEAR, HOUR, etc.).\nFórmula: data_fim - data_inicio.',
-    dica: 'Se data_inicio for maior que data_fim, o resultado é NEGATIVO.',
-    codigoExemplo: '-- Dias até vencer:\nSELECT ProdNome, DATEDIFF(DAY, GETDATE(), ProdDataValidMax) AS DiasRestantes\nFROM PRODUTO;',
+      '• LEN(texto): retorna a QUANTIDADE de caracteres, ignorando espaços em branco à direita.\n• DATALENGTH(texto): retorna a quantidade física de BYTES ocupados na memória (em colunas NVARCHAR, cada caractere ocupa 2 bytes).',
+    dica: 'LEN(\'UNIP \') = 4. Para tamanho do texto, usa-se LEN().',
   },
-
-  // --- CONDICIONAIS: ISNULL & CASE WHEN ---
   {
     id: 12,
-    categoria: 'ISNULL & CASE WHEN',
-    pergunta: 'O que faz a função ISNULL(expressao, substituto)?',
+    categoria: 'Condicionais',
+    pergunta: 'O que faz a função ISNULL(expressão, substituto) e qual a sintaxe do CASE WHEN?',
     resposta:
-      'Testa se a expressão é NULL. Se for NULL, retorna o valor substituto; caso contrário, retorna a própria expressão original.',
-    dica: 'Usado para evitar NULL em relatórios ou somas.',
-    codigoExemplo: 'SELECT ProdNome, ISNULL(ProdDataValidMax, \'1900-01-01\') AS Validade\nFROM PRODUTO;',
+      '• ISNULL(campo, 0): se o campo for NULL, substitui por 0; senão retorna o campo original.\n• CASE WHEN:\nCASE\n  WHEN condicao1 THEN resultado1\n  ELSE padrao\nEND (o END é obrigatório).',
+    dica: 'ISNULL trata nulos diretamente. CASE WHEN é a estrutura condicional IF-THEN-ELSE no SELECT.',
+    codigoExemplo: 'SELECT PedidoNum, ISNULL(PedidoValorTotal, 0) FROM PEDIDO;',
   },
   {
     id: 13,
-    categoria: 'ISNULL & CASE WHEN',
-    pergunta: 'Qual a estrutura sintática obrigatória de um comando CASE WHEN no SELECT?',
+    categoria: 'DDL & Restrições',
+    pergunta: 'Qual a diferença entre PRIMARY KEY e FOREIGN KEY?',
     resposta:
-      'CASE\n  WHEN condicao1 THEN valor1\n  WHEN condicao2 THEN valor2\n  ELSE valor_padrao\nEND\n\n(A cláusula ELSE é opcional; se omitida e nada casar, retorna NULL. O END é obrigatório).',
-    dica: 'Nunca esqueça o END no final do CASE!',
-    codigoExemplo: 'SELECT ProdNome,\n  CASE\n    WHEN ProdPreco < 50 THEN \'Barato\'\n    WHEN ProdPreco <= 200 THEN \'Médio\'\n    ELSE \'Caro\'\n  END AS FaixaPreco\nFROM PRODUTO;',
-  },
-
-  // --- JOINS & CHAVES ---
-  {
-    id: 14,
-    categoria: 'JOINs & Junções',
-    pergunta: 'O que acontece se você fizer SELECT com duas tabelas sem a cláusula ON / WHERE?',
-    resposta:
-      'Ocorre um Produto Cartesiano (CROSS JOIN). Cada linha da primeira tabela é combinada com todas as linhas da segunda tabela (N × M linhas), gerando dados duplicados e inconsistentes.',
-    dica: 'Se Tabela A tem 10 linhas e B tem 20, o produto cartesiano gera 200 linhas!',
-  },
-  {
-    id: 15,
-    categoria: 'JOINs & Junções',
-    pergunta: 'Qual a diferença entre INNER JOIN e LEFT JOIN?',
-    resposta:
-      'INNER JOIN retorna apenas linhas que tenham correspondência exata em AMBAS as tabelas.\nLEFT JOIN (ou LEFT OUTER JOIN) retorna TODAS as linhas da tabela da esquerda; quando não há correspondência na direita, preenche as colunas com NULL.',
-    dica: 'Para listar clientes que nunca compraram: LEFT JOIN + WHERE PedidoCod IS NULL.',
-    codigoExemplo: 'SELECT C.CidadeNome, P.PessoaNome\nFROM CIDADE C\nINNER JOIN PESSOA P ON C.CidadeCod = P.CidadeCod;',
-  },
-  {
-    id: 16,
-    categoria: 'JOINs & Junções',
-    pergunta: 'Como conectar 4 tabelas relacionais em cadeia (PAIS -> UF -> CIDADE -> PESSOA)?',
-    resposta:
-      'Faz-se múltiplos INNER JOINs em sequência, cada um conectando a chave estrangeira com a chave primária correspondente.',
-    dica: 'PESSOA conecta com CIDADE, CIDADE conecta com UF, UF conecta com PAIS.',
-    codigoExemplo: 'SELECT P.PessoaNome, C.CidadeNome, U.UFNome, PA.PaisNome\nFROM PESSOA P\nINNER JOIN CIDADE C ON P.CidadeCod = C.CidadeCod\nINNER JOIN UNIDADE_FEDERATIVA U ON C.UFSigla = U.UFSigla\nINNER JOIN PAIS PA ON U.PaisCod = PA.PaisCod;',
+      '• PRIMARY KEY (PK): Identificador exclusivo da tabela. Não aceita duplicatas e NUNCA aceita NULL (apenas uma por tabela).\n• FOREIGN KEY (FK): Chave estrangeira que aponta para a PK de outra tabela, garantindo a Integridade Referencial.',
+    dica: 'PK identifica a linha. FK garante que a ligação com a tabela pai seja válida.',
   },
 ];
 
+// ==========================================
+// SIMULADO OFICIAL: PROVA DE CONSULTAS SQL
+// Questões Reais da Prova NP2 + Complementares
+// ==========================================
+
 export const BD_NP2_SIMULADO_QUESTIONS: Np2SimuladoQuestion[] = [
+  // --- QUESTÃO 1 DA PROVA REAL ---
   {
     id: 1,
     questionNumber: 1,
-    title: 'Integridade Referencial (Foreign Key)',
-    category: 'DDL & Restrições',
+    title: 'Junção Implícita e Filtro por UF (Prova Real - Q1)',
+    category: 'Consultas com Junção',
     enunciado:
-      'Na criação do banco de dados oficial da aula, foi executado o seguinte comando DDL:\n\nALTER TABLE CIDADE\nADD CONSTRAINT FK_Cidade_UF\nFOREIGN KEY (UFSigla) REFERENCES UNIDADE_FEDERATIVA (UFSigla);\n\nQual é o efeito imediato dessa instrução?',
+      'Escreva uma consulta SQL que recupere os nomes das pessoas que moram no estado de São Paulo (SP), utilizando as tabelas PESSOA e CIDADE do modelo relacional:',
     codeSnippet:
-      'ALTER TABLE CIDADE\nADD CONSTRAINT FK_Cidade_UF\nFOREIGN KEY (UFSigla) REFERENCES UNIDADE_FEDERATIVA (UFSigla);',
+      '-- Tabelas envolvidas:\n-- PESSOA (PessoaCod, PessoaNome, PessoaDataExpCad, CidCod)\n-- CIDADE (CidCod, CidNome, UfSigla)',
     options: [
       {
         id: 'a',
-        text: 'Permite cadastrar em CIDADE apenas siglas de UF que já estejam previamente cadastradas na tabela UNIDADE_FEDERATIVA.',
+        text: "SELECT PessoaNome\nFROM   PESSOA, CIDADE\nWHERE  UF = 'SP';",
       },
       {
         id: 'b',
-        text: 'Cria uma cópia física da tabela UNIDADE_FEDERATIVA dentro da tabela CIDADE.',
+        text: "SELECT PESSOA.PessoaNome\nFROM   PESSOA, CIDADE\nWHERE  PESSOA.CidCod = CIDADE.CidCod\nAND    CIDADE.UfSigla = 'SP';",
       },
       {
         id: 'c',
-        text: 'Exclui automaticamente todas as cidades caso a tabela de UFs seja alterada.',
+        text: "SELECT CidNome\nFROM   PESSOA, CIDADE\nWHERE  PESSOA.CidCod = CIDADE.CidCod\nAND    CIDADE.UfSigla = 'SP';",
       },
       {
         id: 'd',
-        text: 'Impede a criação de chaves primárias na tabela CIDADE.',
+        text: "SELECT *\nFROM   PESSOA, CIDADE\nWHERE  PESSOA.CidCod = 'SP';",
       },
     ],
-    correctAnswer: 'a',
+    correctAnswer: 'b',
     explanation:
-      'A constraint FOREIGN KEY estabelece integridade referencial entre a tabela filha (CIDADE) e a tabela pai (UNIDADE_FEDERATIVA). Ela impede a inserção de siglas inexistentes e bloqueia exclusões orfãs.',
-    decorebaRapida: 'FK garante que a chave estrangeira exista na tabela pai referenciada!',
+      'Gabarito oficial da Prova (Questão 1):\n\n• Alternativa B (CORRETA): Faz a junção relacional entre PESSOA e CIDADE através da chave CidCod (PESSOA.CidCod = CIDADE.CidCod), filtra a unidade federativa através da coluna correta (CIDADE.UfSigla = \'SP\') e projeta exatamente o nome da pessoa (PESSOA.PessoaNome).\n\nAnálise dos erros das outras opções:\n• A: Não faz a junção entre as tabelas (gera produto cartesiano de todas as pessoas com todas as cidades) e a coluna "UF" não existe no modelo (o nome correto é UfSigla).\n• C: A junção e o filtro estão certos, mas retorna CidNome (nome da cidade), e o enunciado pediu o nome das pessoas.\n• D: Compara CidCod (número inteiro) com a string \'SP\', traz todas as colunas (*) e não faz a ligação entre as tabelas.',
+    decorebaRapida: 'Ligue PESSOA.CidCod = CIDADE.CidCod, filtre UfSigla = \'SP\' e traga PessoaNome!',
   },
+
+  // --- QUESTÃO 2 DA PROVA REAL ---
   {
     id: 2,
     questionNumber: 2,
-    title: 'Operador de Busca Parcial (LIKE)',
-    category: 'DQL & Filtros',
+    title: 'Junção de Três Tabelas e Filtro por Data (Prova Real - Q2)',
+    category: 'Consultas com Junção',
     enunciado:
-      'O professor solicitou uma consulta para listar todas as pessoas cujo nome tenha a letra "A" como SEGUNDA letra (ex: Carlos, Gabriel, Mariana). Qual filtro WHERE produz esse resultado exato?',
-    options: [
-      { id: 'a', text: "WHERE PessoaNome LIKE '_A%'" },
-      { id: 'b', text: "WHERE PessoaNome LIKE '%A%'" },
-      { id: 'c', text: "WHERE PessoaNome LIKE 'A_%'" },
-      { id: 'd', text: "WHERE PessoaNome = '_A%'" },
-    ],
-    correctAnswer: 'a',
-    explanation:
-      'No SQL Server, o caractere sublinhado (_) representa exatamente 1 caractere qualquer. Portanto, "_A%" significa: primeiro caractere qualquer, segundo caractere letra A, seguido de zero ou mais caracteres (%).',
-    decorebaRapida: '_ = 1 caractere exato | % = qualquer quantidade.',
-  },
-  {
-    id: 3,
-    questionNumber: 3,
-    title: 'Tratamento de Nulos (IS NULL)',
-    category: 'DQL & Filtros',
-    enunciado:
-      'Um desenvolvedor executou a seguinte consulta esperando encontrar produtos sem data de validade:\n\nSELECT ProdNome FROM PRODUTO WHERE ProdDataValidMax = NULL;\n\nA consulta retornou 0 registros, embora existam produtos sem validade. Por que isso ocorreu?',
-    codeSnippet: 'SELECT ProdNome FROM PRODUTO WHERE ProdDataValidMax = NULL;',
+      'Escreva uma consulta SQL que recupere todos os pedidos do Rio de Janeiro (RJ) com data de cadastro em março de 2026, projetando o número do pedido, a data e o valor total:',
+    codeSnippet:
+      '-- Caminho no modelo: PEDIDO ➔ PESSOA ➔ CIDADE\n-- PEDIDO (PedidoNum, PedidoDataCad, PedidoValorTotal, PessoaCod)\n-- PESSOA (PessoaCod, CidCod)\n-- CIDADE (CidCod, UfSigla)',
     options: [
       {
         id: 'a',
-        text: 'O operador = compara valores; como NULL é ausência de valor, o resultado da igualdade é UNKNOWN. Deve-se usar IS NULL.',
+        text: "SELECT PEDIDONUM\nFROM   PEDIDO, PESSOA, CIDADE\nWHERE  MONTH(PEDIDODATACAD) = 3\nAND    CIDADE.UfSigla = 'RJ';",
       },
       {
         id: 'b',
-        text: 'O nome da tabela PRODUTO deve ser escrito sempre em letras minúsculas no SQL Server.',
+        text: "SELECT PEDIDONUM\nFROM   PEDIDO\nWHERE  PEDIDODATACAD BETWEEN '2026-03-01' AND '2026-06-31';",
       },
       {
         id: 'c',
-        text: 'A coluna ProdDataValidMax não aceita valores nulos por padrão DDL.',
+        text: "SELECT *\nFROM   PEDIDO, CIDADE\nWHERE  UfSigla = 'RJ'\nAND    PEDIDODATACAD = '03/2026';",
       },
       {
         id: 'd',
-        text: 'O SQL Server exige aspas simples em volta da palavra NULL (\'NULL\').',
+        text: "SELECT PEDIDONUM, PEDIDODATACAD, PEDIDOVALORTOTAL\nFROM   PEDIDO, PESSOA, CIDADE\nWHERE  PEDIDO.PESSOACOD = PESSOA.PESSOACOD\nAND    PESSOA.CidCod = CIDADE.CidCod\nAND    CIDADE.UfSigla = 'RJ'\nAND    MONTH(PEDIDODATACAD) = 3\nAND    YEAR(PEDIDODATACAD) = 2026;",
+      },
+    ],
+    correctAnswer: 'd',
+    explanation:
+      'Gabarito oficial da Prova (Questão 2):\n\n• Alternativa D (CORRETA): Percorre com perfeição o caminho de navegação do modelo relacional:\n1. PEDIDO.PESSOACOD = PESSOA.PESSOACOD (liga o pedido ao cliente);\n2. PESSOA.CidCod = CIDADE.CidCod (liga o cliente à cidade);\n3. CIDADE.UfSigla = \'RJ\' (filtra o estado do Rio de Janeiro);\n4. MONTH(PEDIDODATACAD) = 3 AND YEAR(PEDIDODATACAD) = 2026 (filtra rigorosamente o mês de março de 2026).\n\nAnálise dos erros das outras opções:\n• A: Falta as duas condições de junção (gera produto cartesiano colossal) e não filtra o ano, trazendo março de qualquer ano da história.\n• B: Não filtra o estado (RJ), o intervalo vai até junho e a data \'2026-06-31\' não existe no calendário (junho tem 30 dias).\n• C: PEDIDO não possui chave estrangeira direta para CIDADE (a relação passa obrigatoriamente por PESSOA) e comparar DATE diretamente com string \'03/2026\' é inválido.',
+    decorebaRapida: '3 tabelas exigem 2 junções: PEDIDO-PESSOA e PESSOA-CIDADE, mais MONTH=3 e YEAR=2026!',
+  },
+
+  // --- QUESTÃO 3 DA PROVA REAL ---
+  {
+    id: 3,
+    questionNumber: 3,
+    title: 'ORDER BY Duplo e Desempate (Prova Real - Q3)',
+    category: 'Ordenação & Junção',
+    enunciado:
+      'Escreva uma consulta SQL que recupere o número do pedido, o nome da pessoa e o valor total, ordenados decrescentemente pelo valor total e, em caso de empate, pela data do pedido em ordem crescente:',
+    codeSnippet:
+      '-- Junção entre PEDIDO e PESSOA\n-- Critério 1: Valor Total Decrescente (DESC)\n-- Critério 2: Data do Pedido Crescente (ASC)',
+    options: [
+      {
+        id: 'a',
+        text: 'SELECT   PEDIDO.PEDIDONUM, PessoaNome,\n         PEDIDO.PEDIDOVALORTOTAL, PEDIDO.PEDIDODATACAD\nFROM     PEDIDO, PESSOA\nWHERE    PEDIDO.PESSOACOD = PESSOA.PESSOACOD\nORDER BY PEDIDO.PEDIDOVALORTOTAL DESC, PEDIDO.PEDIDODATACAD ASC;',
+      },
+      {
+        id: 'b',
+        text: 'SELECT   PEDIDONUM, PessoaNome\nFROM     PEDIDO, PESSOA\nORDER BY PEDIDONUM;',
+      },
+      {
+        id: 'c',
+        text: 'SELECT   *\nFROM     PEDIDO, PESSOA\nORDER BY PEDIDOVALORTOTAL, PEDIDODATACAD DESC;',
+      },
+      {
+        id: 'd',
+        text: 'SELECT   PEDIDONUM\nFROM     PEDIDO, PESSOA\nWHERE    1=1\nORDER BY 3 DESC, 4 ASC;',
       },
     ],
     correctAnswer: 'a',
     explanation:
-      'NULL representa a ausência de valor no modelo relacional. Qualquer teste de igualdade (= NULL ou <> NULL) resulta no valor lógico UNKNOWN (três valores lógicos do SQL: TRUE, FALSE, UNKNOWN). Para testar nulos, utiliza-se IS NULL ou IS NOT NULL.',
-    decorebaRapida: 'Nunca use = NULL! Sempre use IS NULL ou IS NOT NULL.',
+      'Gabarito oficial da Prova (Questão 3):\n\n• Alternativa A (CORRETA): Realiza a junção entre PEDIDO e PESSOA pela chave comum (PEDIDO.PESSOACOD = PESSOA.PESSOACOD), projeta os campos solicitados e aplica a cláusula ORDER BY com múltiplos critérios:\n1. PEDIDOVALORTOTAL DESC (ordena do maior valor para o menor);\n2. PEDIDODATACAD ASC (em pedidos de mesmo valor, desempata pela data mais antiga primeiro).\n\nAnálise dos erros das outras opções:\n• B: Não realiza a junção WHERE (produto cartesiano), omite o valor total e ordena apenas por PedidoNum.\n• C: Sem condição de junção; além disso, ordena o valor em ordem crescente (padrão ASC quando omitido) e a data em ordem decrescente, o exato inverso do solicitado.\n• D: WHERE 1=1 não conecta as tabelas; ORDER BY 3 e 4 refere-se à 3ª e 4ª coluna, mas o SELECT pediu apenas 1 coluna.',
+    decorebaRapida: 'ORDER BY valor DESC, data ASC com a junção PEDIDO.PESSOACOD = PESSOA.PESSOACOD!',
   },
+
+  // --- QUESTÃO 4 DA PROVA REAL ---
   {
     id: 4,
     questionNumber: 4,
-    title: 'Função de Tamanho de Texto (LEN)',
-    category: 'Funções de Linha Única',
+    title: 'Operador LIKE e Ordem de Cláusulas (Prova Real - Q4)',
+    category: 'DQL & Sintaxe',
     enunciado:
-      'Considere o seguinte comando no SQL Server:\n\nSELECT LEN(\'BANCO DE DADOS  \') AS Resultado;\n\nQual valor numérico inteiro é retornado pelo SQL Server?',
-    codeSnippet: "SELECT LEN('BANCO DE DADOS  ') AS Resultado;",
+      'Escreva uma consulta SQL que recupere todas as colunas da tabela de clientes para os clientes cujo nome começa com a letra "A", exibindo os resultados ordenados alfabeticamente pelo nome (de A a Z):',
+    codeSnippet:
+      '-- Tabela: clientes\n-- Condição: Nome começa com a letra "A"\n-- Ordenação: Alfabética (A a Z = ASC)',
     options: [
-      { id: 'a', text: '14' },
-      { id: 'b', text: '16' },
-      { id: 'c', text: '12' },
-      { id: 'd', text: 'NULL' },
+      {
+        id: 'a',
+        text: "SELECT * FROM clientes\nORDER BY nome LIKE 'A%' ASC;",
+      },
+      {
+        id: 'b',
+        text: "SELECT * FROM clientes\nWHERE nome = 'A%'\nORDER BY nome ASC;",
+      },
+      {
+        id: 'c',
+        text: "SELECT * FROM clientes\nORDER BY nome ASC\nWHERE nome LIKE 'A%';",
+      },
+      {
+        id: 'd',
+        text: "SELECT * FROM clientes\nWHERE nome LIKE 'A%'\nORDER BY nome ASC;",
+      },
     ],
-    correctAnswer: 'a',
+    correctAnswer: 'd',
     explanation:
-      'A função LEN(string) no SQL Server conta o número de caracteres e DESCONSIDERA os espaços em branco à direita (trailing blanks). A frase "BANCO DE DADOS" tem exatamente 14 caracteres (12 letras + 2 espaços internos). Os 2 espaços finais são ignorados por LEN().',
-    decorebaRapida: 'LEN() ignora espaços à direita! "BANCO DE DADOS  " = 14.',
+      'Gabarito oficial da Prova (Questão 4):\n\n• Alternativa D (CORRETA): A cláusula WHERE aplica o filtro com o operador LIKE \'A%\' (o símbolo % atua como curinga para zero ou mais caracteres após a letra A). Em seguida, a cláusula ORDER BY nome ASC garante a ordenação alfabética crescente (de A a Z).\n\nAnálise dos erros das outras opções:\n• A: Coloca o operador LIKE dentro do ORDER BY, o que é um erro de sintaxe e não filtra nenhuma linha da tabela.\n• B: O operador de igualdade (=) desativa os curingas; essa consulta só traria pessoas que tivessem o nome literalmente cadastrado como "A%".\n• C: Erro fatal de ordem de cláusulas: o WHERE deve SEMPRE vir antes do ORDER BY. Colocar ORDER BY antes do WHERE gera erro de compilação SQL.',
+    decorebaRapida: 'WHERE nome LIKE \'A%\' vem ANTES de ORDER BY nome ASC!',
   },
+
+  // --- QUESTÕES COMPLEMENTARES ESSENCIAIS PARA NP2 ---
   {
     id: 5,
     questionNumber: 5,
-    title: 'Diferença entre Datas (DATEDIFF)',
-    category: 'Funções de Linha Única',
+    title: 'Tratamento de Nulos com IS NULL',
+    category: 'DQL & Filtros',
     enunciado:
-      'Observe a expressão abaixo:\n\nSELECT DATEDIFF(YEAR, \'2000-12-31\', \'2026-01-01\') AS Dif;\n\nQual é o valor retornado pela função?',
-    codeSnippet: "SELECT DATEDIFF(YEAR, '2000-12-31', '2026-01-01') AS Dif;",
+      'Deseja-se selecionar todos os produtos da tabela PRODUTO que ainda não possuem data máxima de validade cadastrada (campo nulo). Qual filtro WHERE produz o resultado correto?',
+    codeSnippet: 'SELECT ProdCod, ProdNome FROM PRODUTO WHERE ???;',
     options: [
-      { id: 'a', text: '26' },
-      { id: 'b', text: '25' },
-      { id: 'c', text: '25.5' },
-      { id: 'd', text: '312' },
+      { id: 'a', text: 'WHERE ProdDataValidMax IS NULL' },
+      { id: 'b', text: 'WHERE ProdDataValidMax = NULL' },
+      { id: 'c', text: "WHERE ProdDataValidMax = 'NULL'" },
+      { id: 'd', text: 'WHERE ProdDataValidMax == 0' },
     ],
     correctAnswer: 'a',
     explanation:
-      'DATEDIFF conta o número de limites de data (fronteiras) cruzados na unidade solicitada (YEAR). Ele calcula 2026 - 2000 = 26, sem considerar se os 365 dias do ano foram completados.',
-    decorebaRapida: 'DATEDIFF(YEAR, d1, d2) faz ano(d2) - ano(d1) = 2026 - 2000 = 26.',
+      'No SQL padrão e no SQL Server, NULL representa a ausência de valor. Comparações aritméticas com = NULL retornam UNKNOWN. Para testar campos nulos, deve-se usar obrigatoriamente IS NULL ou IS NOT NULL.',
+    decorebaRapida: 'Nunca use = NULL! Sempre use IS NULL.',
   },
   {
     id: 6,
     questionNumber: 6,
-    title: 'Substituição com ISNULL',
-    category: 'ISNULL & CASE WHEN',
+    title: 'Função de Tamanho de Texto LEN',
+    category: 'Funções de Linha Única',
     enunciado:
-      'A tabela PRODUTO possui itens que não vencem (ProdDataValidMax com valor NULL). Deseja-se exibir a data de validade, mas se for nula, exibir a data "2099-12-31". Qual sintaxe está correta?',
+      'No SQL Server, qual o resultado retornado pelo comando: SELECT LEN(\'SAO PAULO  \') AS Tamanho;?',
+    codeSnippet: "SELECT LEN('SAO PAULO  ') AS Tamanho;",
     options: [
-      {
-        id: 'a',
-        text: "SELECT ProdNome, ISNULL(ProdDataValidMax, '2099-12-31') FROM PRODUTO;",
-      },
-      {
-        id: 'b',
-        text: "SELECT ProdNome, NVL(ProdDataValidMax, '2099-12-31') FROM PRODUTO;",
-      },
-      {
-        id: 'c',
-        text: "SELECT ProdNome, IFNULL(ProdDataValidMax, '2099-12-31') FROM PRODUTO;",
-      },
-      {
-        id: 'd',
-        text: "SELECT ProdNome WHERE ProdDataValidMax = '2099-12-31' FROM PRODUTO;",
-      },
+      { id: 'a', text: '9 (exclui os espaços em branco à direita)' },
+      { id: 'b', text: '11 (conta todos os caracteres e espaços)' },
+      { id: 'c', text: '18 (bytes ocupados)' },
+      { id: 'd', text: 'Erro de compilação' },
     ],
     correctAnswer: 'a',
     explanation:
-      'No SQL Server (T-SQL do Prof. Flávio), a função nativa é ISNULL(coluna, valor_se_nulo). NVL é exclusivo do Oracle e IFNULL pertence ao MySQL.',
-    decorebaRapida: 'SQL Server usa ISNULL(coluna, substituto).',
+      'A função LEN() no SQL Server calcula o comprimento da string excluindo automaticamente os espaços em branco finais (trailing spaces). "SAO PAULO" possui 9 caracteres.',
+    decorebaRapida: 'LEN() exclui espaços em branco do final da palavra.',
   },
   {
     id: 7,
     questionNumber: 7,
-    title: 'Lógica Condicional com CASE WHEN',
-    category: 'ISNULL & CASE WHEN',
+    title: 'Substituição de Nulos com ISNULL',
+    category: 'Condicionais',
     enunciado:
-      'Qual das seguintes alternativas apresenta uma estrutura sintática VÁLIDA para o comando CASE WHEN no SQL Server?',
+      'Ao emitir um relatório de pedidos, se o valor total estiver nulo, deve ser exibido o número 0.00. Qual função nativa do SQL Server executa essa substituição diretamente?',
+    codeSnippet: 'SELECT PedidoNum, ???(PedidoValorTotal, 0.00) FROM PEDIDO;',
     options: [
-      {
-        id: 'a',
-        text: "SELECT CASE WHEN ProdPreco > 100 THEN 'Alto' ELSE 'Normal' END FROM PRODUTO;",
-      },
-      {
-        id: 'b',
-        text: "SELECT CASE WHEN ProdPreco > 100 DO 'Alto' ELSE DO 'Normal' STOP FROM PRODUTO;",
-      },
-      {
-        id: 'c',
-        text: "SELECT IF (ProdPreco > 100, 'Alto', 'Normal') FROM PRODUTO;",
-      },
-      {
-        id: 'd',
-        text: "SELECT CASE (ProdPreco > 100) THEN 'Alto' DEFAULT 'Normal' FROM PRODUTO;",
-      },
+      { id: 'a', text: 'ISNULL(PedidoValorTotal, 0.00)' },
+      { id: 'b', text: 'NVL(PedidoValorTotal, 0.00)' },
+      { id: 'c', text: 'IFNULL(PedidoValorTotal, 0.00)' },
+      { id: 'd', text: 'NULL_REPLACE(PedidoValorTotal, 0.00)' },
     ],
     correctAnswer: 'a',
     explanation:
-      'No padrão ANSI SQL e no SQL Server, a sintaxe obrigatória é: CASE WHEN <condicao> THEN <valor> [ELSE <padrao>] END. O termo final END é mandatório.',
-    decorebaRapida: 'CASE WHEN ... THEN ... ELSE ... END.',
+      'No SQL Server (T-SQL), a função padrão para substituição de valores nulos é ISNULL(expressão, valor_substituto). (NVL é do Oracle e IFNULL é do MySQL).',
+    decorebaRapida: 'SQL Server usa ISNULL(campo, substituto).',
   },
   {
     id: 8,
     questionNumber: 8,
-    title: 'Junção de Tabelas (INNER JOIN)',
-    category: 'JOINs & Junções',
+    title: 'Diferença de Datas com DATEDIFF',
+    category: 'Funções de Data',
     enunciado:
-      'Considere as tabelas PESSOA e CIDADE, onde PESSOA possui a coluna CidadeCod como FK referenciando CidadeCod em CIDADE. Qual comando lista o nome da pessoa e o nome de sua cidade correspondente?',
+      'Qual comando calcula o número exato de DIAS decorridos entre a data do pedido e a data de hoje (GETDATE()) no SQL Server?',
     options: [
-      {
-        id: 'a',
-        text: 'SELECT P.PessoaNome, C.CidadeNome FROM PESSOA P INNER JOIN CIDADE C ON P.CidadeCod = C.CidadeCod;',
-      },
-      {
-        id: 'b',
-        text: 'SELECT P.PessoaNome, C.CidadeNome FROM PESSOA P INNER JOIN CIDADE C WHERE P.CidadeCod = C.CidadeCod;',
-      },
-      {
-        id: 'c',
-        text: 'SELECT P.PessoaNome, C.CidadeNome FROM PESSOA P JOIN CIDADE C ON P.PessoaCod = C.CidadeCod;',
-      },
-      {
-        id: 'd',
-        text: 'SELECT PessoaNome, CidadeNome MERGE PESSOA WITH CIDADE;',
-      },
+      { id: 'a', text: 'DATEDIFF(DAY, PedidoDataCad, GETDATE())' },
+      { id: 'b', text: 'DATEDIFF(PedidoDataCad, GETDATE(), DAY)' },
+      { id: 'c', text: 'GETDATE() - PedidoDataCad' },
+      { id: 'd', text: 'DIAS_ENTRE(PedidoDataCad, HOJE())' },
     ],
     correctAnswer: 'a',
     explanation:
-      'O INNER JOIN conecta as duas tabelas através da cláusula ON, comparando a chave estrangeira (P.CidadeCod) com a chave primária da tabela relacionada (C.CidadeCod).',
-    decorebaRapida: 'FROM PESSOA P INNER JOIN CIDADE C ON P.CidadeCod = C.CidadeCod.',
+      'A sintaxe de DATEDIFF no SQL Server é DATEDIFF(datepart, startdate, enddate). Para dias, utiliza-se DAY (ou D, DD) como primeiro argumento.',
+    decorebaRapida: 'DATEDIFF(unidade, data_inicio, data_fim) ➔ DATEDIFF(DAY, inicio, fim).',
   },
   {
     id: 9,
     questionNumber: 9,
-    title: 'Junções em Cadeia (Múltiplos JOINs)',
-    category: 'JOINs & Junções',
+    title: 'Estrutura Condicional CASE WHEN',
+    category: 'Condicionais',
     enunciado:
-      'Para exibir o nome do fornecedor (tabela PESSOA) de um produto (tabela PRODUTO) e a cidade desse fornecedor (tabela CIDADE), qual estrutura de FROM é correta?',
+      'Qual das seguintes opções apresenta a sintaxe correta de um comando condicional CASE no SELECT do SQL Server?',
     options: [
       {
         id: 'a',
-        text: 'FROM PRODUTO PR INNER JOIN PESSOA P ON PR.PessoaCodFornec = P.PessoaCod INNER JOIN CIDADE C ON P.CidadeCod = C.CidadeCod',
+        text: "CASE WHEN PedidoValorTotal > 1000 THEN 'VIP' ELSE 'Normal' END",
       },
       {
         id: 'b',
-        text: 'FROM PRODUTO PR INNER JOIN CIDADE C ON PR.ProdCod = C.CidadeCod INNER JOIN PESSOA P ON C.CidadeCod = P.CidadeCod',
+        text: "IF PedidoValorTotal > 1000 THEN 'VIP' ELSE 'Normal' FI",
       },
       {
         id: 'c',
-        text: 'FROM PRODUTO PR, PESSOA P, CIDADE C ON PR.ProdCod = P.PessoaCod',
+        text: "CASE (PedidoValorTotal > 1000, 'VIP', 'Normal')",
       },
       {
         id: 'd',
-        text: 'FROM PRODUTO PR INNER JOIN PESSOA P INNER JOIN CIDADE C ON PR.ProdCod = C.CidadeCod',
+        text: "SWITCH WHEN PedidoValorTotal > 1000: 'VIP' DEFAULT: 'Normal'",
       },
     ],
     correctAnswer: 'a',
     explanation:
-      'PRODUTO se conecta a PESSOA através de PessoaCodFornec = PessoaCod. Em seguida, PESSOA se conecta a CIDADE através de CidadeCod = CidadeCod. Cada INNER JOIN exige sua respectiva cláusula ON.',
-    decorebaRapida: 'Cada INNER JOIN deve ter seu próprio ON especificando a ligação PK/FK.',
+      'A expressão CASE no SELECT requer a palavra-chave CASE, uma ou mais cláusulas WHEN condicao THEN retorno, o opcional ELSE e obrigatoriamente a palavra END.',
+    decorebaRapida: 'CASE WHEN condição THEN resultado ELSE padrão END.',
   },
   {
     id: 10,
     questionNumber: 10,
-    title: 'Eliminação de Duplicatas (DISTINCT)',
-    category: 'DQL & Filtros',
+    title: 'Integridade Referencial e Restrição FK',
+    category: 'DDL & Restrições',
     enunciado:
-      'Uma consulta executada como "SELECT CidadeCod FROM PESSOA" retornou 500 linhas com códigos repetidos. Qual cláusula deve ser inserida imediatamente após o SELECT para retornar apenas os códigos distintos sem repetição?',
+      'Na tabela CIDADE, o campo UfSigla faz referência à tabela UNIDADE_FEDERATIVA. O que a restrição FOREIGN KEY garante?',
     options: [
-      { id: 'a', text: 'DISTINCT' },
-      { id: 'b', text: 'UNIQUE' },
-      { id: 'c', text: 'GROUP ONLY' },
-      { id: 'd', text: 'FILTER DIFFERENT' },
+      {
+        id: 'a',
+        text: 'Garante que nenhuma cidade seja cadastrada com uma sigla de UF que não exista na tabela UNIDADE_FEDERATIVA.',
+      },
+      {
+        id: 'b',
+        text: 'Exclui automaticamente o banco de dados caso uma cidade seja alterada.',
+      },
+      {
+        id: 'c',
+        text: 'Permite que cidades tenham múltiplos códigos primários duplicados.',
+      },
+      {
+        id: 'd',
+        text: 'Converte todas as letras da UF em minúsculas antes de gravar.',
+      },
     ],
     correctAnswer: 'a',
     explanation:
-      'A cláusula DISTINCT no SELECT elimina linhas duplicadas do conjunto de resultados, retornando cada valor único apenas uma vez.',
-    decorebaRapida: 'SELECT DISTINCT Coluna FROM Tabela;',
+      'A constraint FOREIGN KEY impõe a Integridade Referencial: nenhum registro filho pode referenciar um valor pai inexistente.',
+    decorebaRapida: 'FK impede códigos órfãos e garante que a chave exista na tabela pai.',
   },
 ];
