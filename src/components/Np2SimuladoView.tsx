@@ -12,6 +12,7 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { Footer } from './Footer';
 import type { Np2SimuladoQuestion } from '../types/np2Training';
 
 interface Np2SimuladoViewProps {
@@ -408,6 +409,9 @@ export const Np2SimuladoView: React.FC<Np2SimuladoViewProps> = ({
           </div>
         )}
       </main>
+
+      {/* Footer com Navegação e Safe Area para Mobile */}
+      <Footer accentColor="text-blue-400" />
     </div>
   );
 };

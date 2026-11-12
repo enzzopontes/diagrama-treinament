@@ -7,6 +7,7 @@ import {
   Zap,
   Lightbulb,
 } from 'lucide-react';
+import { Footer } from './Footer';
 
 interface BdNp2ResumoViewProps {
   onBack: () => void;
@@ -101,7 +102,7 @@ ORDER BY nome ASC;`,
   ];
 
   return (
-    <div className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30">
+    <div className="min-h-screen w-full bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-blue-600/30">
       {/* Top Bar Minimalista */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#090d16]/90 backdrop-blur-md">
         <div className="max-w-4xl mx-auto h-14 px-4 sm:px-6 flex items-center justify-between gap-3">
@@ -224,8 +225,8 @@ ORDER BY nome ASC;`,
                     {q.pergunta}
                   </p>
 
-                  <div className="bg-[#070a12] p-3 rounded-lg border border-white/[0.06] font-mono text-xs text-blue-300 overflow-x-auto">
-                    <pre>{q.codigoCorreto}</pre>
+                  <div className="bg-[#070a12] p-3 rounded-lg border border-white/[0.06] font-mono text-xs text-blue-300 overflow-x-auto code-scroll touch-pan-y">
+                    <pre className="touch-pan-y">{q.codigoCorreto}</pre>
                   </div>
 
                   <div className="p-3 rounded-lg bg-blue-950/20 border border-blue-800/30 text-xs text-blue-300 flex items-start gap-2">
@@ -502,6 +503,9 @@ INNER JOIN CIDADE
           )}
         </div>
       </main>
+
+      {/* Footer com Navegação e Safe Area para Mobile */}
+      <Footer accentColor="text-blue-400" />
     </div>
   );
 };

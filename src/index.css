@@ -14,23 +14,45 @@
   --bottom-nav-safe: 76px;
 }
 
-html, body, #root {
+html {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  height: 100dvh;
-  min-height: 100dvh;
-  overflow: hidden;
+  min-height: 100%;
   background: #080b11 !important;
-  overscroll-behavior: none !important;
-  overscroll-behavior-y: none !important;
   background-color: var(--bg-primary);
   color: #f1f5f9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #080b11 !important;
+  background-color: var(--bg-primary);
+  color: #f1f5f9;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modo Canvas Isolado para Diagramas */
+body.canvas-active {
+  overflow: hidden !important;
+  height: 100dvh !important;
 }
 
 /* Otimização Global para Mobile e Touch */
@@ -41,6 +63,11 @@ html, body, #root {
 
 button, a, input, textarea, select {
   touch-action: manipulation;
+}
+
+/* Garante que blocos de código com scroll horizontal permitam rolagem vertical suave com o dedo */
+pre, code, .code-scroll, [data-code-block] {
+  touch-action: pan-y pinch-zoom !important;
 }
 
 /* Safe Area Insets para Celulares (iPhone, Android 3 Botões ◀ ⌂ ▢ e Gestos) */

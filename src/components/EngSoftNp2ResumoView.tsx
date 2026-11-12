@@ -7,6 +7,7 @@ import {
   Zap,
   Lightbulb,
 } from 'lucide-react';
+import { Footer } from './Footer';
 
 interface EngSoftNp2ResumoViewProps {
   onBack: () => void;
@@ -99,7 +100,7 @@ export const EngSoftNp2ResumoView: React.FC<EngSoftNp2ResumoViewProps> = ({ onBa
   ];
 
   return (
-    <div className="w-screen h-screen h-[100dvh] overflow-y-auto touch-scroll pb-safe bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-emerald-600/30">
+    <div className="min-h-screen w-full bg-[#090d16] text-zinc-100 flex flex-col font-sans antialiased selection:bg-emerald-600/30">
       {/* Top Bar Minimalista */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#090d16]/90 backdrop-blur-md">
         <div className="max-w-4xl mx-auto h-14 px-4 sm:px-6 flex items-center justify-between gap-3">
@@ -521,6 +522,9 @@ export const EngSoftNp2ResumoView: React.FC<EngSoftNp2ResumoViewProps> = ({ onBa
           )}
         </div>
       </main>
+
+      {/* Footer com Navegação e Safe Area para Mobile */}
+      <Footer accentColor="text-emerald-400" />
     </div>
   );
 };
